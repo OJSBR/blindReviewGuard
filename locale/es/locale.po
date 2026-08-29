@@ -1,0 +1,63 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: OJSBR\n"
+"Language-Team: OJSBR\n"
+"Language: es\n"
+
+
+msgid "plugins.generic.blindReviewGuard.displayName"
+msgstr "Guardián de la Revisión Ciega"
+
+msgid "plugins.generic.blindReviewGuard.description"
+msgstr "Comprueba los archivos que el revisor está a punto de recibir en busca de cualquier cosa que identifique a las personas autoras — propiedades del documento, control de cambios, comentarios, el texto y el nombre del archivo — y puede eliminar automáticamente los metadatos identificativos. El archivo original enviado por el autor nunca se modifica."
+
+msgid "plugins.generic.blindReviewGuard.settings.checks"
+msgstr "Comprobaciones"
+
+msgid "plugins.generic.blindReviewGuard.settings.checks.description"
+msgstr "Cada comprobación puede desactivarse si genera ruido en su flujo de trabajo."
+
+msgid "plugins.generic.blindReviewGuard.settings.checkMetadata"
+msgstr "Propiedades del documento (autor, última modificación por, empresa)"
+
+msgid "plugins.generic.blindReviewGuard.settings.checkRevisionMarks"
+msgstr "Control de cambios y comentarios"
+
+msgid "plugins.generic.blindReviewGuard.settings.checkText"
+msgstr "Nombres de autoría, correos electrónicos e iD ORCID en el texto"
+
+msgid "plugins.generic.blindReviewGuard.settings.checkFilename"
+msgstr "Nombres de autoría en el nombre del archivo"
+
+msgid "plugins.generic.blindReviewGuard.settings.behaviour"
+msgstr "Comportamiento"
+
+msgid "plugins.generic.blindReviewGuard.settings.autoClean"
+msgstr "Eliminar automáticamente los metadatos identificativos"
+
+msgid "plugins.generic.blindReviewGuard.settings.autoClean.description"
+msgstr "La limpieza se aplica solo a la copia enviada a revisión y solo a archivos de Office (.docx, .xlsx, .pptx). El texto del manuscrito nunca se modifica y los archivos PDF nunca se reescriben: esos hallazgos solo se informan, para que decida la persona editora."
+
+msgid "plugins.generic.blindReviewGuard.settings.notify"
+msgstr "Avisar a la persona editora en pantalla"
+
+msgid "plugins.generic.blindReviewGuard.settings.scanOpenReview"
+msgstr "Comprobar los archivos incluso cuando la revisión sea abierta"
+
+msgid "plugins.generic.blindReviewGuard.settings.saved"
+msgstr "Configuración guardada."
+
+msgid "plugins.generic.blindReviewGuard.log.findings"
+msgstr "Guardián de la Revisión Ciega: {$total} elemento(s) identificativo(s) encontrado(s) en {$filename}. {$details}"
+
+msgid "plugins.generic.blindReviewGuard.log.cleaned"
+msgstr "Guardián de la Revisión Ciega: {$removed} elemento(s) identificativo(s) eliminado(s) de {$filename}. {$details}"
+
+msgid "plugins.generic.blindReviewGuard.notification.findings"
+msgstr "{$filename} todavía identifica a la autoría: {$details}"
+
+msgid "plugins.generic.blindReviewGuard.notification.beforeReviewer"
+msgstr "Se asignó un revisor y {$filename} todavía identifica a la autoría: {$details}"

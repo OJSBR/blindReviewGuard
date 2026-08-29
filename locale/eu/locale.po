@@ -1,0 +1,81 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: OJSBR\n"
+"Language-Team: OJSBR\n"
+"Language: eu\n"
+
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.displayName"
+msgstr "Blind Review Guard"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.description"
+msgstr "Ebaluatzaileak jasoko dituen fitxategiak egiaztatzen ditu egileak identifikatzen dituen ezer bilatzeko — dokumentuaren propietateak, jarraipeneko aldaketak, iruzkinak, testua eta fitxategiaren izena — eta metadatu identifikatzaileak automatikoki ken ditzake. Egileak igotako jatorrizko fitxategia ez da inoiz aldatzen."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checks"
+msgstr "Egiaztapenak"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checks.description"
+msgstr "Egiaztapen bakoitza itzal daiteke zure lan-fluxuan zarata sortzen badu."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkMetadata"
+msgstr "Dokumentuaren propietateak (egilea, azken aldatzailea, enpresa)"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkRevisionMarks"
+msgstr "Jarraipeneko aldaketak eta iruzkinak"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkText"
+msgstr "Egileen izenak, helbide elektronikoak eta ORCID iD-ak testuan"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkFilename"
+msgstr "Egileen izenak fitxategiaren izenean"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.behaviour"
+msgstr "Portaera"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.autoClean"
+msgstr "Kendu automatikoki metadatu identifikatzaileak"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.autoClean.description"
+msgstr "Garbiketa ebaluaziora bidalitako kopiari bakarrik aplikatzen zaio, eta Office fitxategiei bakarrik (.docx, .xlsx, .pptx). Eskuizkribuaren testua ez da inoiz aldatzen eta PDF fitxategiak ez dira inoiz berridazten: aurkikuntza horiek jakinarazi baino ez dira egiten, editoreak erabaki dezan."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.notify"
+msgstr "Abisatu editoreari pantailan"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.scanOpenReview"
+msgstr "Egiaztatu fitxategiak ebaluazioa irekia denean ere"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.saved"
+msgstr "Ezarpenak gorde dira."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.log.findings"
+msgstr "Blind Review Guard: {$total} elementu identifikatzaile aurkitu dira {$filename} fitxategian. {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.log.cleaned"
+msgstr "Blind Review Guard: {$removed} elementu identifikatzaile kendu dira {$filename} fitxategitik. {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.notification.findings"
+msgstr "{$filename} fitxategiak egileak identifikatzen ditu oraindik: {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.notification.beforeReviewer"
+msgstr "Ebaluatzaile bat esleitu da eta {$filename} fitxategiak egileak identifikatzen ditu oraindik: {$details}"

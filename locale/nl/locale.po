@@ -1,0 +1,63 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: OJSBR\n"
+"Language-Team: OJSBR\n"
+"Language: nl\n"
+
+
+msgid "plugins.generic.blindReviewGuard.displayName"
+msgstr "Blind Review Guard"
+
+msgid "plugins.generic.blindReviewGuard.description"
+msgstr "Controleert de bestanden die een reviewer gaat ontvangen op alles wat de auteurs identificeert — documenteigenschappen, wijzigingen bijhouden, opmerkingen, de tekst en de bestandsnaam — en kan de identificerende metadata automatisch verwijderen. Het oorspronkelijk geüploade bestand wordt nooit gewijzigd."
+
+msgid "plugins.generic.blindReviewGuard.settings.checks"
+msgstr "Controles"
+
+msgid "plugins.generic.blindReviewGuard.settings.checks.description"
+msgstr "Elke controle kan worden uitgeschakeld als die ruis oplevert in uw workflow."
+
+msgid "plugins.generic.blindReviewGuard.settings.checkMetadata"
+msgstr "Documenteigenschappen (auteur, laatst gewijzigd door, bedrijf)"
+
+msgid "plugins.generic.blindReviewGuard.settings.checkRevisionMarks"
+msgstr "Bijgehouden wijzigingen en opmerkingen"
+
+msgid "plugins.generic.blindReviewGuard.settings.checkText"
+msgstr "Auteursnamen, e-mailadressen en ORCID iD's in de tekst"
+
+msgid "plugins.generic.blindReviewGuard.settings.checkFilename"
+msgstr "Auteursnamen in de bestandsnaam"
+
+msgid "plugins.generic.blindReviewGuard.settings.behaviour"
+msgstr "Gedrag"
+
+msgid "plugins.generic.blindReviewGuard.settings.autoClean"
+msgstr "Identificerende metadata automatisch verwijderen"
+
+msgid "plugins.generic.blindReviewGuard.settings.autoClean.description"
+msgstr "Het opschonen geldt alleen voor de kopie die naar de review gaat en alleen voor Office-bestanden (.docx, .xlsx, .pptx). De tekst van het manuscript wordt nooit gewijzigd en PDF-bestanden worden nooit herschreven: die bevindingen worden alleen gemeld, de redactie beslist."
+
+msgid "plugins.generic.blindReviewGuard.settings.notify"
+msgstr "De redacteur op het scherm waarschuwen"
+
+msgid "plugins.generic.blindReviewGuard.settings.scanOpenReview"
+msgstr "Bestanden ook controleren bij open review"
+
+msgid "plugins.generic.blindReviewGuard.settings.saved"
+msgstr "Instellingen opgeslagen."
+
+msgid "plugins.generic.blindReviewGuard.log.findings"
+msgstr "Blind Review Guard: {$total} identificerend(e) element(en) gevonden in {$filename}. {$details}"
+
+msgid "plugins.generic.blindReviewGuard.log.cleaned"
+msgstr "Blind Review Guard: {$removed} identificerend(e) element(en) verwijderd uit {$filename}. {$details}"
+
+msgid "plugins.generic.blindReviewGuard.notification.findings"
+msgstr "{$filename} identificeert nog steeds de auteurs: {$details}"
+
+msgid "plugins.generic.blindReviewGuard.notification.beforeReviewer"
+msgstr "Er is een reviewer toegewezen en {$filename} identificeert nog steeds de auteurs: {$details}"

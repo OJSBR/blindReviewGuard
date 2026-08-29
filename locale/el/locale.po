@@ -1,0 +1,81 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: OJSBR\n"
+"Language-Team: OJSBR\n"
+"Language: el\n"
+
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.displayName"
+msgstr "Blind Review Guard"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.description"
+msgstr "Ελέγχει τα αρχεία που πρόκειται να λάβει ο αξιολογητής για οτιδήποτε ταυτοποιεί τους συγγραφείς — ιδιότητες εγγράφου, παρακολούθηση αλλαγών, σχόλια, το κείμενο και το όνομα του αρχείου — και μπορεί να αφαιρέσει αυτόματα τα ταυτοποιητικά μεταδεδομένα. Το αρχείο που ανέβασε ο συγγραφέας δεν τροποποιείται ποτέ."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checks"
+msgstr "Έλεγχοι"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checks.description"
+msgstr "Κάθε έλεγχος μπορεί να απενεργοποιηθεί αν δημιουργεί θόρυβο στη ροή εργασίας σας."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkMetadata"
+msgstr "Ιδιότητες εγγράφου (συντάκτης, τελευταία τροποποίηση από, εταιρεία)"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkRevisionMarks"
+msgstr "Παρακολούθηση αλλαγών και σχόλια"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkText"
+msgstr "Ονόματα συγγραφέων, διευθύνσεις email και ORCID iD στο κείμενο"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkFilename"
+msgstr "Ονόματα συγγραφέων στο όνομα του αρχείου"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.behaviour"
+msgstr "Συμπεριφορά"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.autoClean"
+msgstr "Αυτόματη αφαίρεση των ταυτοποιητικών μεταδεδομένων"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.autoClean.description"
+msgstr "Ο καθαρισμός αφορά μόνο το αντίγραφο που στέλνεται για αξιολόγηση και μόνο αρχεία Office (.docx, .xlsx, .pptx). Το κείμενο του χειρογράφου δεν τροποποιείται ποτέ και τα αρχεία PDF δεν ξαναγράφονται ποτέ: αυτά τα ευρήματα απλώς αναφέρονται και αποφασίζει η σύνταξη."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.notify"
+msgstr "Προειδοποίηση του συντάκτη στην οθόνη"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.scanOpenReview"
+msgstr "Έλεγχος των αρχείων ακόμη και σε ανοιχτή αξιολόγηση"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.saved"
+msgstr "Οι ρυθμίσεις αποθηκεύτηκαν."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.log.findings"
+msgstr "Blind Review Guard: βρέθηκαν ταυτοποιητικά στοιχεία στο {$filename}: {$total}. {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.log.cleaned"
+msgstr "Blind Review Guard: αφαιρέθηκαν ταυτοποιητικά στοιχεία από το {$filename}: {$removed}. {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.notification.findings"
+msgstr "Το {$filename} εξακολουθεί να ταυτοποιεί τους συγγραφείς: {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.notification.beforeReviewer"
+msgstr "Ορίστηκε αξιολογητής και το {$filename} εξακολουθεί να ταυτοποιεί τους συγγραφείς: {$details}"

@@ -1,0 +1,81 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: OJSBR\n"
+"Language-Team: OJSBR\n"
+"Language: hy\n"
+
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.displayName"
+msgstr "Blind Review Guard"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.description"
+msgstr "Ստուգում է այն ֆայլերը, որոնք գրախոսը պատրաստվում է ստանալ՝ հեղինակներին բացահայտող ամեն ինչի համար՝ փաստաթղթի հատկություններ, հետագծվող փոփոխություններ, մեկնաբանություններ, տեքստ և ֆայլի անուն, և կարող է ինքնաշխատ հեռացնել բացահայտող մետատվյալները. հեղինակի վերբեռնած սկզբնական ֆայլը երբեք չի փոփոխվում։"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checks"
+msgstr "Ստուգումներ"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checks.description"
+msgstr "Ցանկացած ստուգում կարելի է անջատել, եթե այն աղմուկ է ստեղծում ձեր աշխատանքային հոսքում։"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkMetadata"
+msgstr "Փաստաթղթի հատկություններ (հեղինակ, վերջին խմբագրողը, կազմակերպություն)"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkRevisionMarks"
+msgstr "Հետագծվող փոփոխություններ և մեկնաբանություններ"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkText"
+msgstr "Հեղինակների անունները, էլ. հասցեները և ORCID iD-երը տեքստում"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkFilename"
+msgstr "Հեղինակների անունները ֆայլի անվան մեջ"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.behaviour"
+msgstr "Վարքագիծ"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.autoClean"
+msgstr "Ինքնաշխատ հեռացնել բացահայտող մետատվյալները"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.autoClean.description"
+msgstr "Մաքրումը վերաբերում է միայն գրախոսության ուղարկված պատճենին և միայն Office ֆայլերին (.docx, .xlsx, .pptx)։ Ձեռագրի տեքստը երբեք չի փոփոխվում, և PDF ֆայլերը երբեք չեն վերագրվում. այդ գտածոները միայն հաղորդվում են, որոշում է խմբագիրը։"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.notify"
+msgstr "Զգուշացնել խմբագրին էկրանին"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.scanOpenReview"
+msgstr "Ստուգել ֆայլերը նույնիսկ բաց գրախոսության դեպքում"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.saved"
+msgstr "Կարգավորումները պահպանվեցին։"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.log.findings"
+msgstr "Blind Review Guard՝ {$filename}-ում գտնվել է {$total} բացահայտող տարր։ {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.log.cleaned"
+msgstr "Blind Review Guard՝ {$filename}-ից հեռացվել է {$removed} բացահայտող տարր։ {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.notification.findings"
+msgstr "{$filename}-ը դեռ բացահայտում է հեղինակներին՝ {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.notification.beforeReviewer"
+msgstr "Գրախոս է նշանակվել, և {$filename}-ը դեռ բացահայտում է հեղինակներին՝ {$details}"

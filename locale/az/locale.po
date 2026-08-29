@@ -1,0 +1,81 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: OJSBR\n"
+"Language-Team: OJSBR\n"
+"Language: az\n"
+
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.displayName"
+msgstr "Blind Review Guard"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.description"
+msgstr "Rəyçinin alacağı faylları müəllifləri müəyyən edən hər şeyə görə yoxlayır — sənəd xüsusiyyətləri, izlənən dəyişikliklər, şərhlər, mətn və fayl adı — və müəyyənedici metaməlumatları avtomatik silə bilər. Müəllifin yüklədiyi ilkin fayla heç vaxt toxunulmur."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checks"
+msgstr "Yoxlamalar"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checks.description"
+msgstr "İş axınınızda küy yaradırsa, hər yoxlama ayrıca söndürülə bilər."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkMetadata"
+msgstr "Sənəd xüsusiyyətləri (müəllif, son dəyişikliyi edən, şirkət)"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkRevisionMarks"
+msgstr "İzlənən dəyişikliklər və şərhlər"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkText"
+msgstr "Mətndə müəllif adları, e-poçt ünvanları və ORCID iD-ləri"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkFilename"
+msgstr "Fayl adında müəllif adları"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.behaviour"
+msgstr "Davranış"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.autoClean"
+msgstr "Müəyyənedici metaməlumatları avtomatik sil"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.autoClean.description"
+msgstr "Təmizləmə yalnız rəyə göndərilən nüsxəyə və yalnız Office fayllarına (.docx, .xlsx, .pptx) tətbiq olunur. Əlyazmanın mətni heç vaxt dəyişdirilmir və PDF faylları heç vaxt yenidən yazılmır: belə tapıntılar yalnız bildirilir, qərarı redaktor verir."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.notify"
+msgstr "Redaktoru ekranda xəbərdar et"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.scanOpenReview"
+msgstr "Rəy açıq olsa belə faylları yoxla"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.saved"
+msgstr "Parametrlər yadda saxlanıldı."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.log.findings"
+msgstr "Blind Review Guard: {$filename} faylında {$total} müəyyənedici element tapıldı. {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.log.cleaned"
+msgstr "Blind Review Guard: {$filename} faylından {$removed} müəyyənedici element silindi. {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.notification.findings"
+msgstr "{$filename} hələ də müəllifləri müəyyən edir: {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.notification.beforeReviewer"
+msgstr "Rəyçi təyin edildi və {$filename} hələ də müəllifləri müəyyən edir: {$details}"

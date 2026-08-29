@@ -1,0 +1,63 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: OJSBR\n"
+"Language-Team: OJSBR\n"
+"Language: de\n"
+
+
+msgid "plugins.generic.blindReviewGuard.displayName"
+msgstr "Blind Review Guard"
+
+msgid "plugins.generic.blindReviewGuard.description"
+msgstr "Prüft die Dateien, die ein Gutachter erhalten soll, auf alles, was die Autorinnen und Autoren identifiziert — Dokumenteigenschaften, Änderungsverfolgung, Kommentare, den Text und den Dateinamen — und kann die identifizierenden Metadaten automatisch entfernen. Die ursprünglich hochgeladene Datei wird nie verändert."
+
+msgid "plugins.generic.blindReviewGuard.settings.checks"
+msgstr "Prüfungen"
+
+msgid "plugins.generic.blindReviewGuard.settings.checks.description"
+msgstr "Jede Prüfung kann abgeschaltet werden, wenn sie in Ihrem Arbeitsablauf zu viel Rauschen erzeugt."
+
+msgid "plugins.generic.blindReviewGuard.settings.checkMetadata"
+msgstr "Dokumenteigenschaften (Autor, zuletzt geändert von, Firma)"
+
+msgid "plugins.generic.blindReviewGuard.settings.checkRevisionMarks"
+msgstr "Änderungsverfolgung und Kommentare"
+
+msgid "plugins.generic.blindReviewGuard.settings.checkText"
+msgstr "Namen, E-Mail-Adressen und ORCID iDs im Text"
+
+msgid "plugins.generic.blindReviewGuard.settings.checkFilename"
+msgstr "Namen der Autorinnen und Autoren im Dateinamen"
+
+msgid "plugins.generic.blindReviewGuard.settings.behaviour"
+msgstr "Verhalten"
+
+msgid "plugins.generic.blindReviewGuard.settings.autoClean"
+msgstr "Identifizierende Metadaten automatisch entfernen"
+
+msgid "plugins.generic.blindReviewGuard.settings.autoClean.description"
+msgstr "Die Bereinigung betrifft nur die zur Begutachtung gesendete Kopie und nur Office-Dateien (.docx, .xlsx, .pptx). Der Text des Manuskripts wird nie verändert und PDF-Dateien werden nie neu geschrieben: solche Funde werden nur gemeldet, die Redaktion entscheidet."
+
+msgid "plugins.generic.blindReviewGuard.settings.notify"
+msgstr "Die Redaktion auf dem Bildschirm warnen"
+
+msgid "plugins.generic.blindReviewGuard.settings.scanOpenReview"
+msgstr "Dateien auch bei offener Begutachtung prüfen"
+
+msgid "plugins.generic.blindReviewGuard.settings.saved"
+msgstr "Einstellungen gespeichert."
+
+msgid "plugins.generic.blindReviewGuard.log.findings"
+msgstr "Blind Review Guard: {$total} identifizierende(s) Element(e) in {$filename} gefunden. {$details}"
+
+msgid "plugins.generic.blindReviewGuard.log.cleaned"
+msgstr "Blind Review Guard: {$removed} identifizierende(s) Element(e) aus {$filename} entfernt. {$details}"
+
+msgid "plugins.generic.blindReviewGuard.notification.findings"
+msgstr "{$filename} identifiziert weiterhin die Autorinnen und Autoren: {$details}"
+
+msgid "plugins.generic.blindReviewGuard.notification.beforeReviewer"
+msgstr "Ein Gutachter wurde zugewiesen und {$filename} identifiziert weiterhin die Autorinnen und Autoren: {$details}"

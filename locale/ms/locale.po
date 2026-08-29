@@ -1,0 +1,81 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: OJSBR\n"
+"Language-Team: OJSBR\n"
+"Language: ms\n"
+
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.displayName"
+msgstr "Blind Review Guard"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.description"
+msgstr "Memeriksa fail yang bakal diterima oleh penilai untuk apa-apa yang mengenal pasti penulis — sifat dokumen, jejak perubahan, komen, teks dan nama fail — serta boleh membuang metadata pengenalan secara automatik. Fail asal yang dimuat naik oleh penulis tidak pernah diubah."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checks"
+msgstr "Pemeriksaan"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checks.description"
+msgstr "Setiap pemeriksaan boleh dimatikan jika ia menimbulkan gangguan dalam aliran kerja anda."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkMetadata"
+msgstr "Sifat dokumen (pengarang, diubah suai terakhir oleh, syarikat)"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkRevisionMarks"
+msgstr "Jejak perubahan dan komen"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkText"
+msgstr "Nama penulis, alamat e-mel dan ORCID iD dalam teks"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkFilename"
+msgstr "Nama penulis dalam nama fail"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.behaviour"
+msgstr "Kelakuan"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.autoClean"
+msgstr "Buang metadata pengenalan secara automatik"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.autoClean.description"
+msgstr "Pembersihan hanya terpakai pada salinan yang dihantar untuk penilaian dan hanya pada fail Office (.docx, .xlsx, .pptx). Teks manuskrip tidak pernah diubah dan fail PDF tidak pernah ditulis semula: penemuan itu hanya dilaporkan untuk keputusan editor."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.notify"
+msgstr "Beri amaran kepada editor pada skrin"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.scanOpenReview"
+msgstr "Periksa fail walaupun penilaian bersifat terbuka"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.saved"
+msgstr "Tetapan disimpan."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.log.findings"
+msgstr "Blind Review Guard: {$total} unsur pengenalan ditemui dalam {$filename}. {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.log.cleaned"
+msgstr "Blind Review Guard: {$removed} unsur pengenalan dibuang daripada {$filename}. {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.notification.findings"
+msgstr "{$filename} masih mengenal pasti penulis: {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.notification.beforeReviewer"
+msgstr "Penilai telah ditugaskan dan {$filename} masih mengenal pasti penulis: {$details}"

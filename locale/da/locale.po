@@ -1,0 +1,81 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: OJSBR\n"
+"Language-Team: OJSBR\n"
+"Language: da\n"
+
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.displayName"
+msgstr "Blind Review Guard"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.description"
+msgstr "Kontrollerer de filer, en bedømmer er ved at modtage, for alt der identificerer forfatterne — dokumentegenskaber, ændringsmarkeringer, kommentarer, teksten og filnavnet — og kan automatisk fjerne de identificerende metadata. Den fil, forfatteren oprindeligt uploadede, ændres aldrig."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checks"
+msgstr "Kontroller"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checks.description"
+msgstr "Hver kontrol kan slås fra, hvis den skaber støj i dit arbejdsforløb."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkMetadata"
+msgstr "Dokumentegenskaber (forfatter, sidst ændret af, firma)"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkRevisionMarks"
+msgstr "Ændringsmarkeringer og kommentarer"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkText"
+msgstr "Forfatternavne, e-mailadresser og ORCID iD'er i teksten"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkFilename"
+msgstr "Forfatternavne i filnavnet"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.behaviour"
+msgstr "Adfærd"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.autoClean"
+msgstr "Fjern automatisk de identificerende metadata"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.autoClean.description"
+msgstr "Rensningen gælder kun den kopi, der sendes til bedømmelse, og kun Office-filer (.docx, .xlsx, .pptx). Manuskriptets tekst ændres aldrig, og PDF-filer omskrives aldrig: de fund rapporteres blot, så redaktøren kan beslutte."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.notify"
+msgstr "Advar redaktøren på skærmen"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.scanOpenReview"
+msgstr "Kontrollér filerne også ved åben bedømmelse"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.saved"
+msgstr "Indstillinger gemt."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.log.findings"
+msgstr "Blind Review Guard: {$total} identificerende element(er) fundet i {$filename}. {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.log.cleaned"
+msgstr "Blind Review Guard: {$removed} identificerende element(er) fjernet fra {$filename}. {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.notification.findings"
+msgstr "{$filename} identificerer stadig forfatterne: {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.notification.beforeReviewer"
+msgstr "En bedømmer blev tildelt, og {$filename} identificerer stadig forfatterne: {$details}"

@@ -1,0 +1,81 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: OJSBR\n"
+"Language-Team: OJSBR\n"
+"Language: ka\n"
+
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.displayName"
+msgstr "Blind Review Guard"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.description"
+msgstr "ამოწმებს ფაილებს, რომლებსაც რецензენტი მიიღებს, ყველაფერზე, რაც ავტორებს ამხელს — დოკუმენტის თვისებები, თვალყურდევნებული ცვლილებები, კომენტარები, ტექსტი და ფაილის სახელი — და შეუძლია ავტომატურად წაშალოს იდენტიფიცირებადი მეტამონაცემები. ავტორის ატვირთული საწყისი ფაილი არასოდეს იცვლება."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checks"
+msgstr "შემოწმებები"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checks.description"
+msgstr "ნებისმიერი შემოწმება შეიძლება გამოირთოს, თუ ის ხმაურს ქმნის თქვენს სამუშაო ნაკადში."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkMetadata"
+msgstr "დოკუმენტის თვისებები (ავტორი, ბოლოს შეცვალა, კომპანია)"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkRevisionMarks"
+msgstr "თვალყურდევნებული ცვლილებები და კომენტარები"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkText"
+msgstr "ავტორთა სახელები, ელფოსტის მისამართები და ORCID iD ტექსტში"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkFilename"
+msgstr "ავტორთა სახელები ფაილის სახელში"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.behaviour"
+msgstr "ქცევა"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.autoClean"
+msgstr "იდენტიფიცირებადი მეტამონაცემების ავტომატური წაშლა"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.autoClean.description"
+msgstr "გაწმენდა ეხება მხოლოდ რეცენზირებაზე გაგზავნილ ასლს და მხოლოდ Office-ის ფაილებს (.docx, .xlsx, .pptx). ხელნაწერის ტექსტი არასოდეს იცვლება და PDF ფაილები არასოდეს გადაიწერება: ასეთი აღმოჩენები მხოლოდ ეცნობება, გადაწყვეტს რედაქტორი."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.notify"
+msgstr "რედაქტორის გაფრთხილება ეკრანზე"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.scanOpenReview"
+msgstr "ფაილების შემოწმება ღია რეცენზირებისასაც"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.saved"
+msgstr "პარამეტრები შენახულია."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.log.findings"
+msgstr "Blind Review Guard: {$filename}-ში ნაპოვნია {$total} იდენტიფიცირებადი ელემენტი. {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.log.cleaned"
+msgstr "Blind Review Guard: {$filename}-დან წაშლილია {$removed} იდენტიფიცირებადი ელემენტი. {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.notification.findings"
+msgstr "{$filename} კვლავ ამხელს ავტორებს: {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.notification.beforeReviewer"
+msgstr "დაინიშნა რეცენზენტი და {$filename} კვლავ ამხელს ავტორებს: {$details}"

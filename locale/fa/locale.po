@@ -1,0 +1,81 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: OJSBR\n"
+"Language-Team: OJSBR\n"
+"Language: fa\n"
+
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.displayName"
+msgstr "Blind Review Guard"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.description"
+msgstr "فایل‌هایی را که داور در شرف دریافت آن‌هاست از نظر هر چیزی که نویسندگان را شناسایی می‌کند بررسی می‌کند — ویژگی‌های سند، تغییرات پیگیری‌شده، یادداشت‌ها، متن و نام فایل — و می‌تواند فراداده‌های شناسایی‌کننده را به‌طور خودکار حذف کند. فایل اصلی بارگذاری‌شده توسط نویسنده هرگز تغییر نمی‌کند."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checks"
+msgstr "بررسی‌ها"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checks.description"
+msgstr "اگر بررسی‌ای در گردش کار شما نویز ایجاد می‌کند، می‌توان آن را خاموش کرد."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkMetadata"
+msgstr "ویژگی‌های سند (نویسنده، آخرین ویرایش توسط، شرکت)"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkRevisionMarks"
+msgstr "تغییرات پیگیری‌شده و یادداشت‌ها"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkText"
+msgstr "نام نویسندگان، نشانی‌های رایانامه و شناسه‌های ORCID در متن"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkFilename"
+msgstr "نام نویسندگان در نام فایل"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.behaviour"
+msgstr "رفتار"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.autoClean"
+msgstr "حذف خودکار فراداده‌های شناسایی‌کننده"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.autoClean.description"
+msgstr "پاک‌سازی فقط بر نسخهٔ ارسالی به داوری و فقط بر فایل‌های آفیس (.docx، .xlsx، .pptx) اعمال می‌شود. متن دست‌نوشته هرگز تغییر نمی‌کند و فایل‌های PDF هرگز بازنویسی نمی‌شوند: آن یافته‌ها فقط گزارش می‌شوند تا سردبیر تصمیم بگیرد."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.notify"
+msgstr "هشدار به سردبیر روی صفحه"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.scanOpenReview"
+msgstr "بررسی فایل‌ها حتی وقتی داوری باز است"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.saved"
+msgstr "تنظیمات ذخیره شد."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.log.findings"
+msgstr "Blind Review Guard: {$total} عنصر شناسایی‌کننده در {$filename} یافت شد. {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.log.cleaned"
+msgstr "Blind Review Guard: {$removed} عنصر شناسایی‌کننده از {$filename} حذف شد. {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.notification.findings"
+msgstr "{$filename} هنوز نویسندگان را شناسایی می‌کند: {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.notification.beforeReviewer"
+msgstr "داوری تعیین شد و {$filename} هنوز نویسندگان را شناسایی می‌کند: {$details}"

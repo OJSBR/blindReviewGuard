@@ -1,0 +1,81 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: OJSBR\n"
+"Language-Team: OJSBR\n"
+"Language: vi\n"
+
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.displayName"
+msgstr "Blind Review Guard"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.description"
+msgstr "Kiểm tra các tệp mà người phản biện sắp nhận để tìm mọi thứ có thể nhận diện tác giả — thuộc tính tài liệu, theo dõi thay đổi, nhận xét, nội dung và tên tệp — và có thể tự động loại bỏ siêu dữ liệu nhận diện. Tệp gốc do tác giả tải lên không bao giờ bị thay đổi."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checks"
+msgstr "Các kiểm tra"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checks.description"
+msgstr "Có thể tắt từng kiểm tra nếu nó gây nhiễu trong quy trình làm việc của bạn."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkMetadata"
+msgstr "Thuộc tính tài liệu (tác giả, người sửa lần cuối, công ty)"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkRevisionMarks"
+msgstr "Theo dõi thay đổi và nhận xét"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkText"
+msgstr "Tên tác giả, địa chỉ email và ORCID iD trong nội dung"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkFilename"
+msgstr "Tên tác giả trong tên tệp"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.behaviour"
+msgstr "Hành vi"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.autoClean"
+msgstr "Tự động loại bỏ siêu dữ liệu nhận diện"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.autoClean.description"
+msgstr "Việc làm sạch chỉ áp dụng cho bản sao gửi phản biện và chỉ với tệp Office (.docx, .xlsx, .pptx). Nội dung bản thảo không bao giờ bị sửa và tệp PDF không bao giờ bị ghi lại: những phát hiện đó chỉ được báo cáo để biên tập viên quyết định."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.notify"
+msgstr "Cảnh báo biên tập viên trên màn hình"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.scanOpenReview"
+msgstr "Kiểm tra tệp ngay cả khi phản biện mở"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.saved"
+msgstr "Đã lưu cài đặt."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.log.findings"
+msgstr "Blind Review Guard: tìm thấy {$total} mục nhận diện trong {$filename}. {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.log.cleaned"
+msgstr "Blind Review Guard: đã loại bỏ {$removed} mục nhận diện khỏi {$filename}. {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.notification.findings"
+msgstr "{$filename} vẫn nhận diện được tác giả: {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.notification.beforeReviewer"
+msgstr "Đã phân công người phản biện và {$filename} vẫn nhận diện được tác giả: {$details}"

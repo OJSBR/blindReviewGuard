@@ -1,0 +1,81 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: OJSBR\n"
+"Language-Team: OJSBR\n"
+"Language: pl\n"
+
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.displayName"
+msgstr "Blind Review Guard"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.description"
+msgstr "Sprawdza pliki, które ma otrzymać recenzent, pod kątem wszystkiego, co identyfikuje autorów — właściwości dokumentu, śledzone zmiany, komentarze, tekst i nazwę pliku — i potrafi automatycznie usunąć identyfikujące metadane. Plik pierwotnie przesłany przez autora nigdy nie jest zmieniany."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checks"
+msgstr "Kontrole"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checks.description"
+msgstr "Każdą kontrolę można wyłączyć, jeśli generuje szum w Państwa procesie pracy."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkMetadata"
+msgstr "Właściwości dokumentu (autor, ostatnio zmodyfikowany przez, firma)"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkRevisionMarks"
+msgstr "Śledzone zmiany i komentarze"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkText"
+msgstr "Nazwiska autorów, adresy e-mail i identyfikatory ORCID w tekście"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkFilename"
+msgstr "Nazwiska autorów w nazwie pliku"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.behaviour"
+msgstr "Zachowanie"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.autoClean"
+msgstr "Automatycznie usuwaj identyfikujące metadane"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.autoClean.description"
+msgstr "Czyszczenie dotyczy wyłącznie kopii wysyłanej do recenzji i wyłącznie plików Office (.docx, .xlsx, .pptx). Tekst manuskryptu nigdy nie jest modyfikowany, a pliki PDF nigdy nie są przepisywane: takie wykrycia są tylko zgłaszane, decyduje redakcja."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.notify"
+msgstr "Ostrzegaj redaktora na ekranie"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.scanOpenReview"
+msgstr "Sprawdzaj pliki także przy recenzji otwartej"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.saved"
+msgstr "Ustawienia zapisane."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.log.findings"
+msgstr "Blind Review Guard: w pliku {$filename} znaleziono elementów identyfikujących: {$total}. {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.log.cleaned"
+msgstr "Blind Review Guard: z pliku {$filename} usunięto elementów identyfikujących: {$removed}. {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.notification.findings"
+msgstr "{$filename} nadal identyfikuje autorów: {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.notification.beforeReviewer"
+msgstr "Przypisano recenzenta, a {$filename} nadal identyfikuje autorów: {$details}"

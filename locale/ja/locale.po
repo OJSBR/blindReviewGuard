@@ -1,0 +1,81 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: OJSBR\n"
+"Language-Team: OJSBR\n"
+"Language: ja\n"
+
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.displayName"
+msgstr "Blind Review Guard"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.description"
+msgstr "査読者が受け取ろうとしているファイルに著者を特定する情報がないかを確認します。文書のプロパティ、変更履歴、コメント、本文、ファイル名が対象で、特定につながるメタデータは自動的に削除できます。著者がアップロードした元のファイルには一切手を加えません。"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checks"
+msgstr "チェック項目"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checks.description"
+msgstr "各チェックは、業務の流れで雑音になる場合は個別に無効にできます。"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkMetadata"
+msgstr "文書のプロパティ（作成者、最終更新者、会社）"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkRevisionMarks"
+msgstr "変更履歴とコメント"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkText"
+msgstr "本文中の著者名、メールアドレス、ORCID iD"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkFilename"
+msgstr "ファイル名に含まれる著者名"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.behaviour"
+msgstr "動作"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.autoClean"
+msgstr "特定につながるメタデータを自動的に削除する"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.autoClean.description"
+msgstr "削除の対象は査読に送られる複製のみで、Office ファイル（.docx、.xlsx、.pptx）に限られます。原稿の本文が書き換えられることはなく、PDF が再生成されることもありません。これらは報告するだけで、判断は編集者が行います。"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.notify"
+msgstr "編集者に画面上で警告する"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.scanOpenReview"
+msgstr "オープン査読の場合もファイルを確認する"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.saved"
+msgstr "設定を保存しました。"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.log.findings"
+msgstr "Blind Review Guard: {$filename} に著者を特定しうる項目が {$total} 件見つかりました。{$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.log.cleaned"
+msgstr "Blind Review Guard: {$filename} から著者を特定しうる項目を {$removed} 件削除しました。{$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.notification.findings"
+msgstr "{$filename} は依然として著者を特定できます: {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.notification.beforeReviewer"
+msgstr "査読者が割り当てられましたが、{$filename} は依然として著者を特定できます: {$details}"

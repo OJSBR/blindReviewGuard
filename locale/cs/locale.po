@@ -1,0 +1,81 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: OJSBR\n"
+"Language-Team: OJSBR\n"
+"Language: cs\n"
+
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.displayName"
+msgstr "Blind Review Guard"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.description"
+msgstr "Kontroluje soubory, které se chystá obdržet recenzent, na vše, co identifikuje autory — vlastnosti dokumentu, sledované změny, komentáře, text a název souboru — a dokáže identifikující metadata automaticky odstranit. Původní soubor nahraný autorem se nikdy nemění."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checks"
+msgstr "Kontroly"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checks.description"
+msgstr "Každou kontrolu lze vypnout, pokud ve vašem pracovním postupu vytváří šum."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkMetadata"
+msgstr "Vlastnosti dokumentu (autor, naposledy upravil, společnost)"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkRevisionMarks"
+msgstr "Sledované změny a komentáře"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkText"
+msgstr "Jména autorů, e-mailové adresy a ORCID iD v textu"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkFilename"
+msgstr "Jména autorů v názvu souboru"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.behaviour"
+msgstr "Chování"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.autoClean"
+msgstr "Automaticky odstranit identifikující metadata"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.autoClean.description"
+msgstr "Čištění se týká pouze kopie odeslané k recenzi a pouze souborů Office (.docx, .xlsx, .pptx). Text rukopisu se nikdy nemění a soubory PDF se nikdy nepřepisují: takové nálezy se pouze hlásí, rozhoduje redakce."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.notify"
+msgstr "Upozornit redaktora na obrazovce"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.scanOpenReview"
+msgstr "Kontrolovat soubory i při otevřené recenzi"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.saved"
+msgstr "Nastavení uloženo."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.log.findings"
+msgstr "Blind Review Guard: v souboru {$filename} nalezeno identifikujících prvků: {$total}. {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.log.cleaned"
+msgstr "Blind Review Guard: ze souboru {$filename} odstraněno identifikujících prvků: {$removed}. {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.notification.findings"
+msgstr "{$filename} stále identifikuje autory: {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.notification.beforeReviewer"
+msgstr "Byl přiřazen recenzent a {$filename} stále identifikuje autory: {$details}"

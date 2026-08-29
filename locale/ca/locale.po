@@ -1,0 +1,63 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: OJSBR\n"
+"Language-Team: OJSBR\n"
+"Language: ca\n"
+
+
+msgid "plugins.generic.blindReviewGuard.displayName"
+msgstr "Guardià de la revisió cega"
+
+msgid "plugins.generic.blindReviewGuard.description"
+msgstr "Comprova els fitxers que el revisor està a punt de rebre per detectar qualsevol cosa que identifiqui els autors — propietats del document, control de canvis, comentaris, el text i el nom del fitxer — i pot eliminar automàticament les metadades identificatives. El fitxer original enviat per l'autor no es modifica mai."
+
+msgid "plugins.generic.blindReviewGuard.settings.checks"
+msgstr "Comprovacions"
+
+msgid "plugins.generic.blindReviewGuard.settings.checks.description"
+msgstr "Cada comprovació es pot desactivar si genera soroll en el vostre flux de treball."
+
+msgid "plugins.generic.blindReviewGuard.settings.checkMetadata"
+msgstr "Propietats del document (autor, darrera modificació per, empresa)"
+
+msgid "plugins.generic.blindReviewGuard.settings.checkRevisionMarks"
+msgstr "Control de canvis i comentaris"
+
+msgid "plugins.generic.blindReviewGuard.settings.checkText"
+msgstr "Noms d'autoria, adreces electròniques i iD ORCID al text"
+
+msgid "plugins.generic.blindReviewGuard.settings.checkFilename"
+msgstr "Noms d'autoria al nom del fitxer"
+
+msgid "plugins.generic.blindReviewGuard.settings.behaviour"
+msgstr "Comportament"
+
+msgid "plugins.generic.blindReviewGuard.settings.autoClean"
+msgstr "Elimina automàticament les metadades identificatives"
+
+msgid "plugins.generic.blindReviewGuard.settings.autoClean.description"
+msgstr "La neteja només s'aplica a la còpia enviada a revisió i només a fitxers d'Office (.docx, .xlsx, .pptx). El text del manuscrit no es modifica mai i els fitxers PDF no es reescriuen mai: aquests casos només s'informen, perquè decideixi l'equip editorial."
+
+msgid "plugins.generic.blindReviewGuard.settings.notify"
+msgstr "Avisa l'equip editorial a la pantalla"
+
+msgid "plugins.generic.blindReviewGuard.settings.scanOpenReview"
+msgstr "Comprova els fitxers fins i tot quan la revisió sigui oberta"
+
+msgid "plugins.generic.blindReviewGuard.settings.saved"
+msgstr "Configuració desada."
+
+msgid "plugins.generic.blindReviewGuard.log.findings"
+msgstr "Guardià de la revisió cega: {$total} element(s) identificatiu(s) trobat(s) a {$filename}. {$details}"
+
+msgid "plugins.generic.blindReviewGuard.log.cleaned"
+msgstr "Guardià de la revisió cega: {$removed} element(s) identificatiu(s) eliminat(s) de {$filename}. {$details}"
+
+msgid "plugins.generic.blindReviewGuard.notification.findings"
+msgstr "{$filename} encara identifica l'autoria: {$details}"
+
+msgid "plugins.generic.blindReviewGuard.notification.beforeReviewer"
+msgstr "S'ha assignat un revisor i {$filename} encara identifica l'autoria: {$details}"

@@ -1,0 +1,81 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: OJSBR\n"
+"Language-Team: OJSBR\n"
+"Language: hu\n"
+
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.displayName"
+msgstr "Blind Review Guard"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.description"
+msgstr "Ellenőrzi a bírálónak hamarosan átadott fájlokat mindenre, ami azonosítja a szerzőket — dokumentumtulajdonságok, változáskövetés, megjegyzések, a szöveg és a fájlnév —, és képes automatikusan eltávolítani az azonosító metaadatokat. A szerző által feltöltött eredeti fájl soha nem módosul."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checks"
+msgstr "Ellenőrzések"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checks.description"
+msgstr "Bármelyik ellenőrzés kikapcsolható, ha zajt okoz a munkafolyamatban."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkMetadata"
+msgstr "Dokumentumtulajdonságok (szerző, utoljára módosította, cég)"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkRevisionMarks"
+msgstr "Változáskövetés és megjegyzések"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkText"
+msgstr "Szerzőnevek, e-mail-címek és ORCID iD-k a szövegben"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkFilename"
+msgstr "Szerzőnevek a fájlnévben"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.behaviour"
+msgstr "Viselkedés"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.autoClean"
+msgstr "Az azonosító metaadatok automatikus eltávolítása"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.autoClean.description"
+msgstr "A tisztítás csak a bírálatra küldött másolatra és csak az Office-fájlokra (.docx, .xlsx, .pptx) vonatkozik. A kézirat szövege soha nem módosul, és a PDF-fájlok soha nem íródnak újra: ezeket a találatokat csak jelezzük, a szerkesztő dönt."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.notify"
+msgstr "Figyelmeztetés a szerkesztőnek a képernyőn"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.scanOpenReview"
+msgstr "A fájlok ellenőrzése nyílt bírálat esetén is"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.saved"
+msgstr "A beállítások mentve."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.log.findings"
+msgstr "Blind Review Guard: {$total} azonosító elem található a(z) {$filename} fájlban. {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.log.cleaned"
+msgstr "Blind Review Guard: {$removed} azonosító elem eltávolítva a(z) {$filename} fájlból. {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.notification.findings"
+msgstr "A(z) {$filename} még mindig azonosítja a szerzőket: {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.notification.beforeReviewer"
+msgstr "Bírálót rendeltek hozzá, és a(z) {$filename} még mindig azonosítja a szerzőket: {$details}"

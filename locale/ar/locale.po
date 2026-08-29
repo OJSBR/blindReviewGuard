@@ -1,0 +1,81 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: OJSBR\n"
+"Language-Team: OJSBR\n"
+"Language: ar\n"
+
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.displayName"
+msgstr "Blind Review Guard"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.description"
+msgstr "يفحص الملفات التي يوشك المحكّم على استلامها بحثاً عن كل ما يكشف هوية المؤلفين — خصائص المستند، تعقب التغييرات، التعليقات، النص واسم الملف — ويمكنه إزالة البيانات الوصفية الكاشفة تلقائياً. أما الملف الأصلي الذي رفعه المؤلف فلا يُمَسّ أبداً."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checks"
+msgstr "الفحوصات"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checks.description"
+msgstr "يمكن إيقاف أي فحص إذا كان يُحدث ضجيجاً في سير عملكم."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkMetadata"
+msgstr "خصائص المستند (المؤلف، آخر من عدّله، الشركة)"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkRevisionMarks"
+msgstr "تعقب التغييرات والتعليقات"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkText"
+msgstr "أسماء المؤلفين وعناوين البريد الإلكتروني ومعرّفات ORCID في النص"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkFilename"
+msgstr "أسماء المؤلفين في اسم الملف"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.behaviour"
+msgstr "السلوك"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.autoClean"
+msgstr "إزالة البيانات الوصفية الكاشفة تلقائياً"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.autoClean.description"
+msgstr "التنظيف يطال النسخة المرسلة للتحكيم فقط، وملفات أوفيس فقط (.docx و.xlsx و.pptx). لا يُعدَّل نص المخطوط أبداً ولا يُعاد كتابة ملفات PDF: يُبلَّغ عن تلك النتائج فقط ليقرر المحرر."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.notify"
+msgstr "تنبيه المحرر على الشاشة"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.scanOpenReview"
+msgstr "افحص الملفات حتى عندما يكون التحكيم مفتوحاً"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.saved"
+msgstr "تم حفظ الإعدادات."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.log.findings"
+msgstr "Blind Review Guard: عُثر على {$total} عنصراً كاشفاً في {$filename}. {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.log.cleaned"
+msgstr "Blind Review Guard: أُزيل {$removed} عنصراً كاشفاً من {$filename}. {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.notification.findings"
+msgstr "{$filename} ما زال يكشف هوية المؤلفين: {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.notification.beforeReviewer"
+msgstr "تم تعيين محكّم و{$filename} ما زال يكشف هوية المؤلفين: {$details}"

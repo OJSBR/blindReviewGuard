@@ -1,0 +1,63 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: OJSBR\n"
+"Language-Team: OJSBR\n"
+"Language: fr_CA\n"
+
+
+msgid "plugins.generic.blindReviewGuard.displayName"
+msgstr "Gardien de l'évaluation à l'aveugle"
+
+msgid "plugins.generic.blindReviewGuard.description"
+msgstr "Vérifie les fichiers que l'évaluateur va recevoir pour y détecter tout ce qui identifie les auteurs — propriétés du document, marques de révision, commentaires, texte et nom du fichier — et peut supprimer automatiquement les métadonnées identifiantes. Le fichier d'origine déposé par l'auteur n'est jamais modifié."
+
+msgid "plugins.generic.blindReviewGuard.settings.checks"
+msgstr "Vérifications"
+
+msgid "plugins.generic.blindReviewGuard.settings.checks.description"
+msgstr "Chaque vérification peut être désactivée si elle génère du bruit dans votre flux de travail."
+
+msgid "plugins.generic.blindReviewGuard.settings.checkMetadata"
+msgstr "Propriétés du document (auteur, dernière modification par, société)"
+
+msgid "plugins.generic.blindReviewGuard.settings.checkRevisionMarks"
+msgstr "Marques de révision et commentaires"
+
+msgid "plugins.generic.blindReviewGuard.settings.checkText"
+msgstr "Noms des auteurs, adresses courriel et iD ORCID dans le texte"
+
+msgid "plugins.generic.blindReviewGuard.settings.checkFilename"
+msgstr "Noms des auteurs dans le nom du fichier"
+
+msgid "plugins.generic.blindReviewGuard.settings.behaviour"
+msgstr "Comportement"
+
+msgid "plugins.generic.blindReviewGuard.settings.autoClean"
+msgstr "Supprimer automatiquement les métadonnées identifiantes"
+
+msgid "plugins.generic.blindReviewGuard.settings.autoClean.description"
+msgstr "Le nettoyage ne s'applique qu'à la copie envoyée en évaluation et uniquement aux fichiers Office (.docx, .xlsx, .pptx). Le texte du manuscrit n'est jamais modifié et les fichiers PDF ne sont jamais réécrits : ces constats sont seulement signalés, à la rédaction de décider."
+
+msgid "plugins.generic.blindReviewGuard.settings.notify"
+msgstr "Avertir la rédaction à l'écran"
+
+msgid "plugins.generic.blindReviewGuard.settings.scanOpenReview"
+msgstr "Vérifier les fichiers même lorsque l'évaluation est ouverte"
+
+msgid "plugins.generic.blindReviewGuard.settings.saved"
+msgstr "Paramètres enregistrés."
+
+msgid "plugins.generic.blindReviewGuard.log.findings"
+msgstr "Gardien de l'évaluation à l'aveugle : {$total} élément(s) identifiant(s) trouvé(s) dans {$filename}. {$details}"
+
+msgid "plugins.generic.blindReviewGuard.log.cleaned"
+msgstr "Gardien de l'évaluation à l'aveugle : {$removed} élément(s) identifiant(s) supprimé(s) de {$filename}. {$details}"
+
+msgid "plugins.generic.blindReviewGuard.notification.findings"
+msgstr "{$filename} identifie encore les auteurs : {$details}"
+
+msgid "plugins.generic.blindReviewGuard.notification.beforeReviewer"
+msgstr "Un évaluateur a été assigné et {$filename} identifie encore les auteurs : {$details}"

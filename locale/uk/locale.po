@@ -1,0 +1,81 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: OJSBR\n"
+"Language-Team: OJSBR\n"
+"Language: uk\n"
+
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.displayName"
+msgstr "Blind Review Guard"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.description"
+msgstr "Перевіряє файли, які от-от отримає рецензент, на все, що ідентифікує авторів, — властивості документа, відстежувані зміни, коментарі, текст і назву файлу — і може автоматично вилучити ідентифікаційні метадані. Початковий файл, завантажений автором, ніколи не змінюється."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checks"
+msgstr "Перевірки"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checks.description"
+msgstr "Будь-яку перевірку можна вимкнути, якщо вона створює шум у вашому робочому процесі."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkMetadata"
+msgstr "Властивості документа (автор, ким змінено, організація)"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkRevisionMarks"
+msgstr "Відстежувані зміни та коментарі"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkText"
+msgstr "Імена авторів, адреси ел. пошти та ORCID iD у тексті"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkFilename"
+msgstr "Імена авторів у назві файлу"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.behaviour"
+msgstr "Поведінка"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.autoClean"
+msgstr "Автоматично вилучати ідентифікаційні метадані"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.autoClean.description"
+msgstr "Очищення стосується лише копії, надісланої на рецензування, і лише файлів Office (.docx, .xlsx, .pptx). Текст рукопису ніколи не змінюється, а PDF-файли ніколи не переписуються: такі знахідки лише повідомляються, рішення ухвалює редактор."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.notify"
+msgstr "Попереджати редактора на екрані"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.scanOpenReview"
+msgstr "Перевіряти файли навіть за відкритого рецензування"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.saved"
+msgstr "Налаштування збережено."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.log.findings"
+msgstr "Blind Review Guard: у файлі {$filename} знайдено ідентифікаційних елементів: {$total}. {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.log.cleaned"
+msgstr "Blind Review Guard: з файлу {$filename} вилучено ідентифікаційних елементів: {$removed}. {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.notification.findings"
+msgstr "{$filename} досі ідентифікує авторів: {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.notification.beforeReviewer"
+msgstr "Призначено рецензента, а {$filename} досі ідентифікує авторів: {$details}"

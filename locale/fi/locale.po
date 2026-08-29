@@ -1,0 +1,81 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: OJSBR\n"
+"Language-Team: OJSBR\n"
+"Language: fi\n"
+
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.displayName"
+msgstr "Blind Review Guard"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.description"
+msgstr "Tarkistaa tiedostot, jotka arvioija on saamassa, kaiken kirjoittajat paljastavan varalta — asiakirjan ominaisuudet, muutosmerkinnät, kommentit, tekstin ja tiedostonimen — ja voi poistaa tunnistetiedot automaattisesti. Kirjoittajan alkuperäistä tiedostoa ei muuteta koskaan."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checks"
+msgstr "Tarkistukset"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checks.description"
+msgstr "Jokainen tarkistus voidaan kytkeä pois, jos se tuottaa häiriötä työnkulussanne."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkMetadata"
+msgstr "Asiakirjan ominaisuudet (tekijä, viimeksi muokannut, yritys)"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkRevisionMarks"
+msgstr "Muutosmerkinnät ja kommentit"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkText"
+msgstr "Kirjoittajien nimet, sähköpostiosoitteet ja ORCID iD:t tekstissä"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.checkFilename"
+msgstr "Kirjoittajien nimet tiedostonimessä"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.behaviour"
+msgstr "Toiminta"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.autoClean"
+msgstr "Poista tunnistetiedot automaattisesti"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.autoClean.description"
+msgstr "Puhdistus koskee vain arviointiin lähetettävää kopiota ja vain Office-tiedostoja (.docx, .xlsx, .pptx). Käsikirjoituksen tekstiä ei muuteta koskaan eikä PDF-tiedostoja kirjoiteta uudelleen: ne havainnot vain raportoidaan toimituksen päätettäväksi."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.notify"
+msgstr "Varoita toimittajaa näytöllä"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.scanOpenReview"
+msgstr "Tarkista tiedostot myös avoimessa arvioinnissa"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.settings.saved"
+msgstr "Asetukset tallennettu."
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.log.findings"
+msgstr "Blind Review Guard: {$total} tunnistetieto(a) löytyi tiedostosta {$filename}. {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.log.cleaned"
+msgstr "Blind Review Guard: {$removed} tunnistetieto(a) poistettu tiedostosta {$filename}. {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.notification.findings"
+msgstr "{$filename} paljastaa yhä kirjoittajat: {$details}"
+
+#, fuzzy
+msgid "plugins.generic.blindReviewGuard.notification.beforeReviewer"
+msgstr "Arvioija määritettiin, ja {$filename} paljastaa yhä kirjoittajat: {$details}"

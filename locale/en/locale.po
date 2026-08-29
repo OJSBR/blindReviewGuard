@@ -1,0 +1,63 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: OJSBR\n"
+"Language-Team: OJSBR\n"
+"Language: en\n"
+
+
+msgid "plugins.generic.blindReviewGuard.displayName"
+msgstr "Blind Review Guard"
+
+msgid "plugins.generic.blindReviewGuard.description"
+msgstr "Checks the files a reviewer is about to receive for anything that identifies the authors — document properties, tracked changes, comments, the text and the file name — and can remove the identifying metadata automatically. The author's original upload is never touched."
+
+msgid "plugins.generic.blindReviewGuard.settings.checks"
+msgstr "Checks"
+
+msgid "plugins.generic.blindReviewGuard.settings.checks.description"
+msgstr "Each check can be turned off if it produces noise in your workflow."
+
+msgid "plugins.generic.blindReviewGuard.settings.checkMetadata"
+msgstr "Document properties (author, last modified by, company)"
+
+msgid "plugins.generic.blindReviewGuard.settings.checkRevisionMarks"
+msgstr "Tracked changes and comments"
+
+msgid "plugins.generic.blindReviewGuard.settings.checkText"
+msgstr "Author names, e-mail addresses and ORCID iDs in the text"
+
+msgid "plugins.generic.blindReviewGuard.settings.checkFilename"
+msgstr "Author names in the file name"
+
+msgid "plugins.generic.blindReviewGuard.settings.behaviour"
+msgstr "Behaviour"
+
+msgid "plugins.generic.blindReviewGuard.settings.autoClean"
+msgstr "Remove the identifying metadata automatically"
+
+msgid "plugins.generic.blindReviewGuard.settings.autoClean.description"
+msgstr "Cleaning applies only to the copy sent to review, and only to Office files (.docx, .xlsx, .pptx). The text of the manuscript is never modified and PDF files are never rewritten: those findings are reported for the editor to decide."
+
+msgid "plugins.generic.blindReviewGuard.settings.notify"
+msgstr "Warn the editor on screen"
+
+msgid "plugins.generic.blindReviewGuard.settings.scanOpenReview"
+msgstr "Check the files even when the review is open"
+
+msgid "plugins.generic.blindReviewGuard.settings.saved"
+msgstr "Settings saved."
+
+msgid "plugins.generic.blindReviewGuard.log.findings"
+msgstr "Blind Review Guard: {$total} identifying item(s) found in {$filename}. {$details}"
+
+msgid "plugins.generic.blindReviewGuard.log.cleaned"
+msgstr "Blind Review Guard: {$removed} identifying item(s) removed from {$filename}. {$details}"
+
+msgid "plugins.generic.blindReviewGuard.notification.findings"
+msgstr "{$filename} still identifies the authors: {$details}"
+
+msgid "plugins.generic.blindReviewGuard.notification.beforeReviewer"
+msgstr "A reviewer was assigned and {$filename} still identifies the authors: {$details}"
