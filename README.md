@@ -1,26 +1,32 @@
 # Blind Review Guard — OJS plugin
 
 [![OJS](https://img.shields.io/badge/OJS-3.5-brightgreen)](https://pkp.sfu.ca/ojs/)
-[![Version](https://img.shields.io/badge/version-1.0.0.0-blue)](version.xml)
+[![Version](https://img.shields.io/badge/version-1.0.1.0-blue)](version.xml)
 [![License](https://img.shields.io/badge/license-GPL--3.0-lightgrey)](LICENSE)
 
-**⬇️ Install package:** [OJS 3.5](https://github.com/OJSBR/blindReviewGuard/releases/download/1.0.0.0/blindReviewGuard-1.0.0.0.tar.gz) — or browse all [Releases](../../releases).
+**⬇️ Install package:** [OJS 3.5](https://github.com/OJSBR/blindReviewGuard/releases/download/1.0.1.0/blindReviewGuard-1.0.1.0.tar.gz) — or browse all [Releases](../../releases).
 
 A generic plugin for **Open Journal Systems (OJS)** that checks the files a reviewer is about
 to receive for anything that identifies the authors, and can remove the identifying metadata
 automatically. **The file the author uploaded is never touched.**
 
-> **Developed and maintained by [OJSBR](https://ojsbr.com.br).** See the
+> **Developed and maintained by [OJSBR](https://ojsbr.com).** See the
 > [Credits & authorship](#credits--authorship) section below.
 
 ## Compatibility & branches
 
 | OJS version | Branch | Plugin release |
 |-------------|--------|----------------|
-| OJS 3.5.x   | [`stable-3_5_0`](../../tree/stable-3_5_0) *(default)* | 1.0.0.0 |
+| OJS 3.5.x   | [`stable-3_5_0`](../../tree/stable-3_5_0) *(default)* | 1.0.1.0 |
 
 Requires PHP 8.2+ with the standard `zip` and `mbstring` extensions. No external binary is
 needed: there is no dependency on `exiftool`, `qpdf` or `pdftotext`.
+
+> **Upgrade from 1.0.0.0.** In 1.0.0.0 the automatic cleaning rewrote the stored file in place.
+> Because OJS lets the review copy and the author's upload share one stored file, that also
+> cleaned the metadata of the **author's original upload** — the text was never touched, but
+> the document properties and the names on tracked changes of the identified version were.
+> From 1.0.1.0 the cleaned package is stored as a new file for the review copy only.
 
 ## The problem
 
@@ -47,7 +53,8 @@ already broken.
 - Knows **who the authors of that submission are**. It does not look for "a name": it looks
   for *those* names, e-mail addresses, ORCID iDs and affiliations, read from the submission's
   own contributor list. That is what separates a useful report from a noisy one.
-- Reports what it found in the submission's **Activity Log**, and warns the editor on screen.
+- Reports in the submission's **Activity Log** what it removed and, separately, what is still
+  there, and warns the editor on screen about the latter.
 - Optionally **removes** the identifying metadata from the copy — document properties and the
   author names on tracked changes and comments.
 - Stays quiet when the review is **open**: there the author's name is the arrangement, not a
@@ -88,7 +95,7 @@ Everything is optional and every check can be turned off on its own, under the p
 | Warn the editor on screen | on | a notification for whoever is doing the work |
 | Check even when the review is open | off | for journals that anonymise regardless |
 
-There is no "block the decision" mode in 1.0.0.0. With automatic cleaning on, the leak is
+There is no "block the decision" mode. With automatic cleaning on, the leak is
 gone before a reviewer can open the file, and refusing an editor's decision on the strength
 of a heuristic is a bigger promise than this plugin should make.
 
@@ -105,8 +112,9 @@ That is why this plugin works on the copy, at the moment the copy is created. Tw
    `INTERNAL_REVIEW_FILE` (19) and for the author's revised versions, `REVIEW_REVISION` (15)
    and `INTERNAL_REVIEW_REVISION` (20). Files in any other stage are ignored.
 2. **`ReviewAssignment::add`** — the last moment before someone outside the editorial team can
-   open the file. Nothing is cleaned here, only reported: rewriting a file under a reviewer's
-   feet would be worse than telling the editor about it.
+   open the file. Only the files of the round the reviewer was assigned to are checked, and
+   nothing is cleaned here, only reported: rewriting a file under a reviewer's feet would be
+   worse than telling the editor about it.
 
 Whether the review is anonymous is read from the journal's `defaultReviewMode` at the first
 moment (no reviewer exists yet) and from the assignment's own `reviewMethod` at the second.
@@ -121,33 +129,47 @@ Formats, all in pure PHP:
   fails — a scanned PDF, an exotic encoding — the report says the text could not be read
   rather than reporting the file as clean.
 
-Cleaning works on a copy of the package and only then moves it over the original, so an
-interrupted run cannot leave a truncated manuscript behind.
+**Cleaning never writes a stored file.** The review copy is a new submission file, but it points
+at the very same stored file as the author's upload. So the cleaned package is written to a
+temporary file, stored through the core file service as a new file, and only the review copy is
+pointed at it (`Repo::submissionFile()->edit(..., ['fileId' => ...])`). The author's upload keeps
+its stored file byte for byte; the previous file stays in the copy's revision history, which
+only the editorial team can reach. If storing fails, nothing has changed and the report says
+nothing was removed.
 
 ## Tests
 
-The suite covers the parts that decide whether the report is trustworthy: boundary matching
-(`Sousa` must not fire on `Sousada`), names split across runs, accented text, the neutral
-placeholders Word writes, the fact that cleaning removes the metadata and leaves the
-manuscript alone, and the PDF scanner admitting when it could not read the body.
+- **PHP suite** (`tests/`, 67 tests): boundary matching (`Sousa` must not fire on `Sousada`),
+  names split across runs, accented text, the neutral placeholders Word writes, the cleaning
+  removing the metadata and leaving the manuscript alone **and never writing the source file**,
+  the PDF scanner admitting when it could not read the body, the plugin classes against the
+  installed PKP (return types of the overridden methods, file stages in scope), the settings
+  form, the 38 translations (identical keys, placeholders, fuzzy markers) and the template.
+  Fixtures are **generated, not committed**. Run either way from the OJS root:
 
-Fixtures are **generated, not committed**: a reviewer can read exactly what makes each file
-dirty, and the repository stays free of opaque binaries.
+  ```bash
+  php plugins/generic/blindReviewGuard/tests/run.php
+  lib/pkp/lib/vendor/bin/phpunit --configuration lib/pkp/tests/phpunit.xml --no-coverage "$PWD/plugins/generic/blindReviewGuard/tests"
+  ```
 
-The suite is written for PHPUnit and is collected by PKP's `ApplicationPlugins` suite. Because
-the OJS release tarball ships no development dependencies, it also runs standalone:
+- **Cypress** (`cypress/tests/functional/BlindReviewGuard.cy.js`): the settings, and a file sent
+  to review through the same endpoint the "send to review" step uses — the review copy gets a
+  file of its own and the author's upload keeps its stored file. Captcha on login must be off
+  for the run.
 
-```bash
-php plugins/generic/blindReviewGuard/tests/run.php
-```
+  ```bash
+  npx cypress run --config specPattern='plugins/generic/blindReviewGuard/cypress/tests/functional/*.cy.js' \
+    --env contextPath=<journal>,adminUser=<user>,adminPassword=<password>,submissionId=<id>,submissionFileId=<id>
+  ```
 
-```
-42 passed, 0 failed
-```
+- Verified on OJS 3.5.0.3 with a `.docx` naming the author in its properties, tracked changes
+  and comments, sent to review: the author's upload unchanged (same checksum, same stored file),
+  the review copy cleaned, the body left intact, the two Activity Log entries, and a reviewer
+  assignment checked without errors. The same flow on 1.0.0.0 reproduces the defect above.
 
 ## Credits & authorship
 
-- **Developed and maintained by** [OJSBR](https://ojsbr.com.br) — original plugin.
+- **Developed and maintained by** [OJSBR](https://ojsbr.com) — original plugin.
 - Distributed under the **GNU GPL v3**, the same license as OJS.
 
 ## Contributing
@@ -168,16 +190,23 @@ Plugin genérico para o **Open Journal Systems (OJS)** que verifica os arquivos 
 está prestes a receber em busca de qualquer coisa que identifique os autores, e pode remover
 automaticamente os metadados identificadores. **O arquivo enviado pelo autor nunca é alterado.**
 
-> **Desenvolvido e mantido pela [OJSBR](https://ojsbr.com.br).**
+> **Desenvolvido e mantido pela [OJSBR](https://ojsbr.com).**
 
 ### Compatibilidade e branches
 
 | Versão do OJS | Branch | Release do plugin |
 |---------------|--------|-------------------|
-| OJS 3.5.x     | [`stable-3_5_0`](../../tree/stable-3_5_0) *(padrão)* | 1.0.0.0 |
+| OJS 3.5.x     | [`stable-3_5_0`](../../tree/stable-3_5_0) *(padrão)* | 1.0.1.0 |
 
 Requer PHP 8.2+ com as extensões `zip` e `mbstring`. Não depende de nenhum binário externo —
 nada de `exiftool`, `qpdf` ou `pdftotext`.
+
+> **Atualização a partir da 1.0.0.0.** Na 1.0.0.0 a limpeza automática regravava o arquivo
+> armazenado. Como o OJS faz a cópia da avaliação e o envio do autor compartilharem o mesmo
+> arquivo armazenado, isso também limpava os metadados do **arquivo original do autor** — o texto
+> nunca foi tocado, mas as propriedades do documento e os nomes nas marcas de revisão da versão
+> identificada sim. A partir da 1.0.1.0 o pacote limpo é gravado como arquivo novo, só para a
+> cópia da avaliação.
 
 ### O problema
 
@@ -198,7 +227,8 @@ O editor costuma descobrir quando o avaliador comenta: tarde, com a cegueira já
 - **Sabe quem são os autores daquela submissão.** Não procura "um nome": procura *aqueles*
   nomes, e-mails, iDs ORCID e afiliações, lidos da própria lista de contribuidores. É isso que
   separa um laudo útil de um laudo que o editor aprende a ignorar.
-- Registra o que encontrou no **Histórico de Atividades** da submissão e avisa o editor na tela.
+- Registra no **Histórico de Atividades** da submissão o que removeu e, à parte, o que continua lá,
+  e avisa o editor na tela sobre o que continua.
 - Opcionalmente **remove** os metadados identificadores da cópia.
 - Fica calado quando a avaliação é **aberta**.
 
@@ -225,25 +255,28 @@ do documento, marcas de revisão e comentários, nomes/e-mails/ORCID no texto, n
 limpeza automática, aviso na tela e verificar mesmo em avaliação aberta. Os padrões deixam
 tudo ligado, exceto o último.
 
-Não existe modo "bloquear a decisão" na 1.0.0.0: com a limpeza automática ligada o vazamento
+Não existe modo "bloquear a decisão": com a limpeza automática ligada o vazamento
 some antes de qualquer avaliador abrir o arquivo, e recusar a decisão de um editor com base
 numa heurística é uma promessa maior do que este plugin deve fazer.
 
 ### Testes
 
-A suíte cobre o que decide se o laudo é confiável: casamento por limite de palavra (`Sousa`
-não pode disparar em `Sousada`), nome partido entre runs, texto acentuado, os valores neutros
-que o Word escreve, a limpeza que remove o metadado e preserva o manuscrito, e o scanner de
-PDF admitindo quando não conseguiu ler o corpo. Os arquivos de teste são **gerados, não
-versionados**.
+Suíte PHP em `tests/` (67 testes, pelo `tests/run.php` ou pelo PHPUnit do PKP) e Cypress em
+`cypress/tests/functional/`, com os comandos da seção em inglês. A suíte cobre o casamento por
+limite de palavra (`Sousa` não dispara em `Sousada`), nome partido entre runs, texto acentuado, a
+limpeza que remove o metadado, preserva o manuscrito **e nunca grava o arquivo de origem**, as
+classes do plugin contra o PKP instalado, as 38 traduções e o template. Os arquivos de teste são
+**gerados, não versionados**.
 
-```bash
-php plugins/generic/blindReviewGuard/tests/run.php
-```
+Verificado no OJS 3.5.0.3 com um `.docx` que nomeia o autor nas propriedades, nas marcas de
+revisão e nos comentários, enviado para avaliação: envio do autor inalterado (mesmo checksum,
+mesmo arquivo armazenado), cópia da avaliação limpa, corpo intacto, os dois registros no Histórico
+de Atividades e designação de avaliador conferida sem erros. O mesmo fluxo na 1.0.0.0 reproduz o
+defeito descrito acima.
 
 ### Créditos e autoria
 
-- **Desenvolvido e mantido pela** [OJSBR](https://ojsbr.com.br) — plugin autoral.
+- **Desenvolvido e mantido pela** [OJSBR](https://ojsbr.com) — plugin autoral.
 - Distribuído sob a **GNU GPL v3**, a mesma licença do OJS.
 
 ### Licença

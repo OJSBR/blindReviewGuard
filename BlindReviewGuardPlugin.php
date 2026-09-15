@@ -3,7 +3,7 @@
 /**
  * @file plugins/generic/blindReviewGuard/BlindReviewGuardPlugin.php
  *
- * Copyright (c) 2026 OJSBR (https://ojsbr.com.br)
+ * Copyright (c) 2026 OJSBR (https://ojsbr.com)
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  * @class BlindReviewGuardPlugin
@@ -33,6 +33,11 @@
  *   2. ReviewAssignment::add - the last moment before a person outside the
  *      editorial team can open the file.
  *
+ * The copy is a new submission file, but it usually points at the very same
+ * stored file as the original. A cleaned file is therefore never written in
+ * place: the cleaned package is stored as a new file and only the review copy is
+ * pointed at it, so the author's upload stays byte for byte what was sent.
+ *
  * WHEN IT STAYS QUIET
  *
  * In open review the author's name is not a leak, it is the arrangement, so the
@@ -44,7 +49,9 @@ namespace APP\plugins\generic\blindReviewGuard;
 
 use APP\core\Application;
 use APP\facades\Repo;
+use APP\notification\NotificationManager;
 use APP\plugins\generic\blindReviewGuard\classes\FileScanner;
+use APP\plugins\generic\blindReviewGuard\classes\Finding;
 use APP\plugins\generic\blindReviewGuard\classes\IdentityProfile;
 use APP\plugins\generic\blindReviewGuard\classes\ScanReport;
 use PKP\config\Config;
@@ -56,12 +63,12 @@ use PKP\linkAction\LinkAction;
 use PKP\linkAction\request\AjaxModal;
 use PKP\log\event\PKPSubmissionEventLogEntry;
 use PKP\notification\Notification;
-use APP\notification\NotificationManager;
 use PKP\plugins\GenericPlugin;
 use PKP\plugins\Hook;
 use PKP\security\Validation;
 use PKP\submission\reviewAssignment\ReviewAssignment;
 use PKP\submissionFile\SubmissionFile;
+use Throwable;
 
 class BlindReviewGuardPlugin extends GenericPlugin
 {
@@ -99,9 +106,13 @@ class BlindReviewGuardPlugin extends GenericPlugin
             return false;
         }
 
+        if (Application::isUnderMaintenance()) {
+            return true;
+        }
+
         if ($this->getEnabled($mainContextId)) {
-            Hook::add('SubmissionFile::add', [$this, 'checkPromotedFile']);
-            Hook::add('ReviewAssignment::add', [$this, 'checkBeforeReviewerSeesIt']);
+            Hook::add('SubmissionFile::add', $this->checkPromotedFile(...));
+            Hook::add('ReviewAssignment::add', $this->checkBeforeReviewerSeesIt(...));
         }
 
         return true;
@@ -221,6 +232,9 @@ class BlindReviewGuardPlugin extends GenericPlugin
 
         $report = $this->scan($submissionFile, $submission, $context);
         if ($report) {
+            if ($report->cleanedPath !== null) {
+                $report = $this->storeCleanedCopy($submissionFile, $submission, $context, $report);
+            }
             $this->record($report, $submission, $context);
         }
 
@@ -254,9 +268,13 @@ class BlindReviewGuardPlugin extends GenericPlugin
             return Hook::CONTINUE;
         }
 
+        // Only the files of the round the reviewer was assigned to: earlier
+        // rounds were checked when they were created, and re-reporting them on
+        // every assignment would bury the warning that matters.
         $files = Repo::submissionFile()
             ->getCollector()
             ->filterBySubmissionIds([$submission->getId()])
+            ->filterByReviewRoundIds([(int) $reviewAssignment->getReviewRoundId()])
             ->filterByFileStages(self::REVIEW_FILE_STAGES)
             ->getMany();
 
@@ -316,6 +334,36 @@ class BlindReviewGuardPlugin extends GenericPlugin
         $filename = $submissionFile->getLocalizedData('name') ?: basename($path);
 
         return (new FileScanner())->scan($path, $filename, $profile, $checks, $autoClean, (int) $submissionFile->getId());
+    }
+
+    /**
+     * Store the cleaned package as a new file and point the review copy at it.
+     *
+     * In OJS the review copy and the author's upload share the stored file, so
+     * the cleaned package cannot replace it. The previous file stays in the copy's
+     * revision history, where only the editorial team can reach it. When storing
+     * fails, nothing has changed on disk and the report says nothing was cleaned.
+     */
+    private function storeCleanedCopy(SubmissionFile $submissionFile, $submission, Context $context, ScanReport $report): ScanReport
+    {
+        $cleanedPath = $report->cleanedPath;
+        try {
+            $extension = strtolower(pathinfo((string) $cleanedPath, PATHINFO_EXTENSION));
+            $fileId = app()->get('file')->add(
+                $cleanedPath,
+                Repo::submissionFile()->getSubmissionDir($context->getId(), $submission->getId()) . '/' . uniqid() . '.' . $extension
+            );
+            Repo::submissionFile()->edit($submissionFile, ['fileId' => $fileId]);
+        } catch (Throwable $e) {
+            error_log('blindReviewGuard: the cleaned copy of submission file ' . $submissionFile->getId() . ' could not be stored: ' . $e->getMessage());
+            $report = $report->withoutCleaning();
+        } finally {
+            if (is_file((string) $cleanedPath)) {
+                @unlink($cleanedPath);
+            }
+        }
+
+        return $report;
     }
 
     /**
@@ -412,14 +460,21 @@ class BlindReviewGuardPlugin extends GenericPlugin
             return;
         }
 
-        $this->log($submission, $report, $remaining, $cleaned, $context);
-
+        // What was removed and what is still there are two different facts for
+        // the editor: the first needs no action, the second does.
+        if (!empty($cleaned)) {
+            $this->log($submission, $report, 'plugins.generic.blindReviewGuard.log.cleaned', $cleaned, count($remaining), $context);
+        }
         if (!empty($remaining)) {
+            $this->log($submission, $report, 'plugins.generic.blindReviewGuard.log.findings', $remaining, count($cleaned), $context);
             $this->notify($report, $submission, 'plugins.generic.blindReviewGuard.notification.findings');
         }
     }
 
-    private function log($submission, ScanReport $report, array $remaining, array $cleaned, Context $context): void
+    /**
+     * @param Finding[] $findings The findings the entry is about
+     */
+    private function log($submission, ScanReport $report, string $key, array $findings, int $otherCount, Context $context): void
     {
         // The message is composed here, already translated, instead of being
         // stored as a key plus parameters. The event log persists only the
@@ -429,9 +484,7 @@ class BlindReviewGuardPlugin extends GenericPlugin
         // It is written in the journal's primary locale so that the entry reads
         // the same for everyone, whatever language the editor happened to use.
         $locale = $context->getPrimaryLocale();
-        $key = empty($remaining)
-            ? 'plugins.generic.blindReviewGuard.log.cleaned'
-            : 'plugins.generic.blindReviewGuard.log.findings';
+        $isCleaned = $key === 'plugins.generic.blindReviewGuard.log.cleaned';
 
         $eventLog = Repo::eventLog()->newDataObject([
             'assocType' => PKPApplication::ASSOC_TYPE_SUBMISSION,
@@ -442,9 +495,9 @@ class BlindReviewGuardPlugin extends GenericPlugin
                 'filename' => $report->filename,
                 // Not named "count": that parameter name is reserved by the ICU
                 // message formatter and would turn the string into a plural rule.
-                'total' => count($remaining),
-                'removed' => count($cleaned),
-                'details' => $this->summarise($remaining ?: $cleaned),
+                'total' => $isCleaned ? $otherCount : count($findings),
+                'removed' => $isCleaned ? count($findings) : $otherCount,
+                'details' => $this->summarise($findings),
             ], $locale),
             'isTranslated' => true,
             'dateLogged' => Core::getCurrentDate(),

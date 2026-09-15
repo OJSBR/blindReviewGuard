@@ -3,7 +3,7 @@
 /**
  * @file plugins/generic/blindReviewGuard/tests/TestCase.php
  *
- * Copyright (c) 2026 OJSBR (https://ojsbr.com.br)
+ * Copyright (c) 2026 OJSBR (https://ojsbr.com)
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  * @class TestCase
@@ -19,7 +19,7 @@
 
 namespace APP\plugins\generic\blindReviewGuard\tests;
 
-if (class_exists('\PHPUnit\Framework\TestCase')) {
+if (!defined('BLINDREVIEWGUARD_STANDALONE_TESTS') && class_exists('\PHPUnit\Framework\TestCase')) {
     abstract class TestCaseBase extends \PHPUnit\Framework\TestCase
     {
     }

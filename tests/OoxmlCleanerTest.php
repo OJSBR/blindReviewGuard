@@ -3,7 +3,7 @@
 /**
  * @file plugins/generic/blindReviewGuard/tests/OoxmlCleanerTest.php
  *
- * Copyright (c) 2026 OJSBR (https://ojsbr.com.br)
+ * Copyright (c) 2026 OJSBR (https://ojsbr.com)
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  * @class OoxmlCleanerTest
@@ -38,10 +38,19 @@ class OoxmlCleanerTest extends TestCase
         return $xml === false ? '' : $xml;
     }
 
+    /** Clean $source into a fresh target and return the target. */
+    private function cleaned(string $source, ?array &$removed = null): string
+    {
+        $target = FixtureFactory::directory() . '/cleaned-' . basename($source);
+        @unlink($target);
+        $removed = (new OoxmlCleaner())->clean($source, $target);
+
+        return $target;
+    }
+
     public function testRemovesPropertiesAndAuthorAttributes(): void
     {
-        $path = FixtureFactory::dirtyDocx('to-clean.docx');
-        $removed = (new OoxmlCleaner())->clean($path);
+        $path = $this->cleaned(FixtureFactory::dirtyDocx('to-clean.docx'), $removed);
 
         $this->assertNotEmpty($removed, 'nothing was reported as removed');
 
@@ -56,33 +65,43 @@ class OoxmlCleanerTest extends TestCase
         $this->assertStringNotContainsString('Joao Pereira', $this->part($path, 'word/comments.xml'));
     }
 
+    public function testNeverWritesTheSourceFile(): void
+    {
+        // In OJS the review copy and the author's upload share one stored file:
+        // writing the source would clean the author's original too.
+        $source = FixtureFactory::dirtyDocx('shared.docx');
+        $before = md5_file($source);
+        $target = $this->cleaned($source, $removed);
+
+        $this->assertNotEmpty($removed);
+        $this->assertSame($before, md5_file($source), 'the source file was modified');
+        $this->assertTrue($before !== md5_file($target), 'the target is not a cleaned copy');
+        $this->assertEmpty((new OoxmlCleaner())->clean($source, $source), 'cleaning onto the source itself must be refused');
+        $this->assertSame($before, md5_file($source));
+    }
+
     public function testLeavesTheManuscriptTextUntouched(): void
     {
         // The one thing the plugin must never do is edit the submission.
-        $path = FixtureFactory::dirtyDocx('keep-text.docx');
-        (new OoxmlCleaner())->clean($path);
-        $document = $this->part($path, 'word/document.xml');
+        $document = $this->part($this->cleaned(FixtureFactory::dirtyDocx('keep-text.docx')), 'word/document.xml');
 
         $this->assertStringContainsString('Estudo sobre letramento cientifico', $document);
         $this->assertStringContainsString('maria.souza@ufxx.br', $document, 'the e-mail in the body is reported, never silently deleted');
         $this->assertStringContainsString('Trecho inserido durante a revisao.', $document);
     }
 
-    public function testTheFileIsStillAValidPackage(): void
+    public function testTheCleanedFileIsStillAValidPackage(): void
     {
-        $path = FixtureFactory::dirtyDocx('still-valid.docx');
-        (new OoxmlCleaner())->clean($path);
+        $path = $this->cleaned(FixtureFactory::dirtyDocx('still-valid.docx'));
 
         $zip = new ZipArchive();
         $this->assertSame(true, $zip->open($path, ZipArchive::CHECKCONS) === true, 'the cleaned file is no longer a readable package');
         $zip->close();
-        $this->assertEmpty(glob(FixtureFactory::directory() . '/*.brg-tmp') ?: [], 'a temporary file was left behind');
     }
 
     public function testAfterCleaningOnlyTheTextFindingsRemain(): void
     {
-        $path = FixtureFactory::dirtyDocx('rescan.docx');
-        (new OoxmlCleaner())->clean($path);
+        $path = $this->cleaned(FixtureFactory::dirtyDocx('rescan.docx'));
 
         $findings = (new OoxmlScanner())->scan($path, $this->profile(), FileScanner::DEFAULT_CHECKS);
         foreach ($findings as $finding) {
@@ -91,12 +110,14 @@ class OoxmlCleanerTest extends TestCase
         $this->assertNotEmpty($findings, 'the text findings must survive - only the editor can decide about the body');
     }
 
-    public function testCleaningACleanFileChangesNothing(): void
+    public function testCleaningACleanFileLeavesNoTargetBehind(): void
     {
-        $path = FixtureFactory::cleanDocx('already-clean.docx');
-        $before = md5_file($path);
+        $source = FixtureFactory::cleanDocx('already-clean.docx');
+        $before = md5_file($source);
+        $target = $this->cleaned($source, $removed);
 
-        $this->assertEmpty((new OoxmlCleaner())->clean($path));
-        $this->assertSame($before, md5_file($path), 'the file was rewritten even though there was nothing to remove');
+        $this->assertEmpty($removed);
+        $this->assertFalse(is_file($target), 'a target was left behind although there was nothing to remove');
+        $this->assertSame($before, md5_file($source));
     }
 }

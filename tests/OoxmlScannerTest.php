@@ -3,7 +3,7 @@
 /**
  * @file plugins/generic/blindReviewGuard/tests/OoxmlScannerTest.php
  *
- * Copyright (c) 2026 OJSBR (https://ojsbr.com.br)
+ * Copyright (c) 2026 OJSBR (https://ojsbr.com)
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  * @class OoxmlScannerTest
@@ -27,7 +27,7 @@ class OoxmlScannerTest extends TestCase
     }
 
     /** @return string[] The matched values of the findings of one type */
-    private function matches(array $findings, string $type): array
+    private function matchesOfType(array $findings, string $type): array
     {
         return array_values(array_map(
             fn (Finding $f) => $f->match,
@@ -46,7 +46,7 @@ class OoxmlScannerTest extends TestCase
     public function testFindsIdentifyingDocumentProperties(): void
     {
         $findings = (new OoxmlScanner())->scan(FixtureFactory::dirtyDocx(), $this->profile(), FileScanner::DEFAULT_CHECKS);
-        $properties = $this->matches($findings, Finding::TYPE_DOCUMENT_PROPERTY);
+        $properties = $this->matchesOfType($findings, Finding::TYPE_DOCUMENT_PROPERTY);
 
         $this->assertTrue(in_array('Maria Souza', $properties, true), 'dc:creator was not reported');
         $this->assertTrue(in_array('msouza', $properties, true), 'cp:lastModifiedBy was not reported');
@@ -57,23 +57,23 @@ class OoxmlScannerTest extends TestCase
     {
         // dc:title is not a person; reporting it would be noise.
         $findings = (new OoxmlScanner())->scan(FixtureFactory::dirtyDocx(), $this->profile(), FileScanner::DEFAULT_CHECKS);
-        $this->assertFalse(in_array('Estudo sobre letramento', $this->matches($findings, Finding::TYPE_DOCUMENT_PROPERTY), true));
+        $this->assertFalse(in_array('Estudo sobre letramento', $this->matchesOfType($findings, Finding::TYPE_DOCUMENT_PROPERTY), true));
     }
 
     public function testFindsTrackedChangeAndCommentAuthors(): void
     {
         $findings = (new OoxmlScanner())->scan(FixtureFactory::dirtyDocx(), $this->profile(), FileScanner::DEFAULT_CHECKS);
 
-        $this->assertTrue(in_array('Maria Souza', $this->matches($findings, Finding::TYPE_REVISION_MARK), true), 'w:ins author was not reported');
+        $this->assertTrue(in_array('Maria Souza', $this->matchesOfType($findings, Finding::TYPE_REVISION_MARK), true), 'w:ins author was not reported');
         // The commenter is not one of the authors and is reported all the same:
         // a supervisor's name breaks the anonymity just as effectively.
-        $this->assertTrue(in_array('Joao Pereira', $this->matches($findings, Finding::TYPE_COMMENT), true), 'comment author was not reported');
+        $this->assertTrue(in_array('Joao Pereira', $this->matchesOfType($findings, Finding::TYPE_COMMENT), true), 'comment author was not reported');
     }
 
     public function testFindsTheAuthorEmailInTheBody(): void
     {
         $findings = (new OoxmlScanner())->scan(FixtureFactory::dirtyDocx(), $this->profile(), FileScanner::DEFAULT_CHECKS);
-        $this->assertTrue(in_array('maria.souza@ufxx.br', $this->matches($findings, Finding::TYPE_TEXT), true));
+        $this->assertTrue(in_array('maria.souza@ufxx.br', $this->matchesOfType($findings, Finding::TYPE_TEXT), true));
     }
 
     public function testFindsANameSplitAcrossRuns(): void
@@ -81,7 +81,7 @@ class OoxmlScannerTest extends TestCase
         // The fixture writes "Mari" + "a Souza" in separate runs, exactly as Word
         // does after editing. A search over the raw XML would miss it.
         $findings = (new OoxmlScanner())->scan(FixtureFactory::dirtyDocx(), $this->profile(), FileScanner::DEFAULT_CHECKS);
-        $this->assertTrue(in_array('Maria Souza', $this->matches($findings, Finding::TYPE_TEXT), true));
+        $this->assertTrue(in_array('Maria Souza', $this->matchesOfType($findings, Finding::TYPE_TEXT), true));
     }
 
     public function testReportsNothingForACleanDocument(): void
@@ -95,9 +95,9 @@ class OoxmlScannerTest extends TestCase
         $checks = ['metadata' => false, 'revisionMarks' => true, 'text' => false, 'filename' => false];
         $findings = (new OoxmlScanner())->scan(FixtureFactory::dirtyDocx(), $this->profile(), $checks);
 
-        $this->assertEmpty($this->matches($findings, Finding::TYPE_DOCUMENT_PROPERTY));
-        $this->assertEmpty($this->matches($findings, Finding::TYPE_TEXT));
-        $this->assertNotEmpty($this->matches($findings, Finding::TYPE_REVISION_MARK));
+        $this->assertEmpty($this->matchesOfType($findings, Finding::TYPE_DOCUMENT_PROPERTY));
+        $this->assertEmpty($this->matchesOfType($findings, Finding::TYPE_TEXT));
+        $this->assertNotEmpty($this->matchesOfType($findings, Finding::TYPE_REVISION_MARK));
     }
 
     public function testNeutralPlaceholdersAreNotReported(): void

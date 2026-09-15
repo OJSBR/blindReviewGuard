@@ -3,7 +3,7 @@
 /**
  * @file plugins/generic/blindReviewGuard/classes/OoxmlCleaner.php
  *
- * Copyright (c) 2026 OJSBR (https://ojsbr.com.br)
+ * Copyright (c) 2026 OJSBR (https://ojsbr.com)
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  * @class OoxmlCleaner
@@ -16,8 +16,10 @@
  * the text. Rewriting the manuscript is the author's job and the editor's call;
  * silently editing a submission would be worse than the leak.
  *
- * The work is done on a copy and only then moved over the original, so an
- * interrupted run cannot leave a truncated manuscript behind.
+ * The source is never written. The cleaned package is written to a separate
+ * target, because in OJS the stored file of a review copy is usually the very
+ * same file as the author's upload: rewriting it in place would clean the
+ * original too. Storing the target is the caller's job.
  */
 
 namespace APP\plugins\generic\blindReviewGuard\classes;
@@ -31,38 +33,35 @@ class OoxmlCleaner
     public const ANONYMOUS = 'Author';
 
     /**
-     * Clean the file in place.
+     * Write a cleaned copy of $source to $target.
      *
-     * @return Finding[] The findings that were removed (empty if nothing changed)
+     * @return Finding[] The findings that were removed. When nothing was
+     *                   removed, or the copy could not be written, the result is
+     *                   empty and no target is left behind.
      */
-    public function clean(string $path): array
+    public function clean(string $source, string $target): array
     {
-        $temp = $path . '.brg-tmp';
-        if (!@copy($path, $temp)) {
+        if ($source === $target || !@copy($source, $target)) {
             return [];
         }
 
         $zip = new ZipArchive();
-        if ($zip->open($temp) !== true) {
-            @unlink($temp);
+        if ($zip->open($target) !== true) {
+            @unlink($target);
             return [];
         }
 
         $removed = [];
+        $closed = false;
         try {
             $removed = array_merge($removed, $this->cleanProperties($zip));
             $removed = array_merge($removed, $this->cleanAuthorAttributes($zip));
         } finally {
-            $zip->close();
+            $closed = $zip->close();
         }
 
-        if (empty($removed)) {
-            @unlink($temp);
-            return [];
-        }
-
-        if (!@rename($temp, $path)) {
-            @unlink($temp);
+        if (empty($removed) || !$closed) {
+            @unlink($target);
             return [];
         }
 

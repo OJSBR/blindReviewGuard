@@ -3,7 +3,7 @@
 /**
  * @file plugins/generic/blindReviewGuard/tests/FileScannerTest.php
  *
- * Copyright (c) 2026 OJSBR (https://ojsbr.com.br)
+ * Copyright (c) 2026 OJSBR (https://ojsbr.com)
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  * @class FileScannerTest
@@ -49,6 +49,7 @@ class FileScannerTest extends TestCase
     public function testAutoCleanRemovesWhatItCanAndReportsTheRest(): void
     {
         $path = FixtureFactory::dirtyDocx('facade.docx');
+        $before = md5_file($path);
         $report = (new FileScanner())->scan($path, 'facade.docx', $this->profile(), FileScanner::DEFAULT_CHECKS, true);
 
         $this->assertNotEmpty($report->cleaned, 'nothing was cleaned');
@@ -57,6 +58,34 @@ class FileScannerTest extends TestCase
         foreach ($remaining as $finding) {
             $this->assertSame(Finding::TYPE_TEXT, $finding->type);
         }
+
+        // The scanned file is never modified: the cleaned copy is handed over.
+        $this->assertSame($before, md5_file($path), 'the scanned file was modified');
+        $this->assertTrue(is_string($report->cleanedPath) && is_file($report->cleanedPath), 'no cleaned copy was handed over');
+        $this->assertTrue(!str_starts_with($report->cleanedPath, dirname($path) . '/'), 'the cleaned copy must not be written next to the stored file');
+        $rescan = (new FileScanner())->scan($report->cleanedPath, 'facade.docx', $this->profile());
+        $this->assertCount(count($remaining), $rescan->findings, 'the cleaned copy still carries what was reported as removed');
+        @unlink($report->cleanedPath);
+    }
+
+    public function testNothingToCleanHandsOverNoCopy(): void
+    {
+        $report = (new FileScanner())->scan(FixtureFactory::cleanDocx('nothing.docx'), 'estudo.docx', $this->profile(), FileScanner::DEFAULT_CHECKS, true);
+
+        $this->assertEmpty($report->cleaned);
+        $this->assertSame(null, $report->cleanedPath);
+    }
+
+    public function testAReportWithoutCleaningKeepsEveryFinding(): void
+    {
+        // Used when the cleaned copy could not be stored: nothing was removed.
+        $report = (new FileScanner())->scan(FixtureFactory::dirtyDocx('unstored.docx'), 'unstored.docx', $this->profile(), FileScanner::DEFAULT_CHECKS, true);
+        @unlink((string) $report->cleanedPath);
+        $unstored = $report->withoutCleaning();
+
+        $this->assertEmpty($unstored->cleaned);
+        $this->assertSame(null, $unstored->cleanedPath);
+        $this->assertCount(count($report->findings), $unstored->remaining());
     }
 
     public function testWithoutAutoCleanTheFileIsNotTouched(): void

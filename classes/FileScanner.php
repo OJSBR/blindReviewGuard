@@ -3,7 +3,7 @@
 /**
  * @file plugins/generic/blindReviewGuard/classes/FileScanner.php
  *
- * Copyright (c) 2026 OJSBR (https://ojsbr.com.br)
+ * Copyright (c) 2026 OJSBR (https://ojsbr.com)
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  * @class FileScanner
@@ -39,7 +39,11 @@ class FileScanner
 
     /**
      * @param array $checks Which checks to run; see DEFAULT_CHECKS
-     * @param bool $autoClean Remove what can be removed (OOXML metadata only)
+     * @param bool $autoClean Remove what can be removed (OOXML metadata only).
+     *                        The file at $path is never modified: the cleaned
+     *                        copy is written next to it and its path returned in
+     *                        ScanReport::$cleanedPath, for the caller to store
+     *                        and then delete.
      */
     public function scan(string $path, string $filename, IdentityProfile $profile, array $checks = self::DEFAULT_CHECKS, bool $autoClean = false, ?int $submissionFileId = null): ScanReport
     {
@@ -65,10 +69,23 @@ class FileScanner
         $findings = OoxmlScanner::deduplicate($findings);
 
         $cleaned = [];
-        if ($autoClean && $this->ooxml->handles($extension) && is_writable($path)) {
-            $cleaned = $this->cleaner->clean($path);
+        $cleanedPath = null;
+        if ($autoClean && $this->ooxml->handles($extension) && is_readable($path)) {
+            $target = self::cleanedPathFor($path);
+            $cleaned = $this->cleaner->clean($path, $target);
+            $cleanedPath = $cleaned ? $target : null;
         }
 
-        return new ScanReport($filename, $findings, $cleaned, $textReliable, $submissionFileId);
+        return new ScanReport($filename, $findings, $cleaned, $textReliable, $submissionFileId, $cleanedPath);
+    }
+
+    /**
+     * A free path for the cleaned copy, in the system temporary directory so
+     * that nothing is ever created inside the journal's files directory unless
+     * the caller stores it there.
+     */
+    public static function cleanedPathFor(string $path): string
+    {
+        return sys_get_temp_dir() . '/brg-' . bin2hex(random_bytes(8)) . '.' . strtolower(pathinfo($path, PATHINFO_EXTENSION));
     }
 }

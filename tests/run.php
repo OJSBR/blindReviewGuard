@@ -3,7 +3,7 @@
 /**
  * @file plugins/generic/blindReviewGuard/tests/run.php
  *
- * Copyright (c) 2026 OJSBR (https://ojsbr.com.br)
+ * Copyright (c) 2026 OJSBR (https://ojsbr.com)
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  * Standalone runner for the test suite.
@@ -19,13 +19,17 @@
  * Exit code 0 when everything passes, 1 otherwise.
  */
 
+// Use the suite's own assertions even when the OJS bootstrap makes PHPUnit
+// autoloadable: PHPUnit assertions need its runner to report a failure.
+define('BLINDREVIEWGUARD_STANDALONE_TESTS', true);
+
 require_once __DIR__ . '/bootstrap.php';
 
 use APP\plugins\generic\blindReviewGuard\tests\FixtureFactory;
 
-if (class_exists('\PHPUnit\Framework\TestCase')) {
+if (is_file(dirname(__DIR__, 4) . '/lib/pkp/lib/vendor/bin/phpunit')) {
     fwrite(STDERR, "PHPUnit is available; run it directly for the full reporting:\n"
-        . "  vendor/bin/phpunit " . dirname(__DIR__) . "/tests\n\n");
+        . "  lib/pkp/lib/vendor/bin/phpunit --configuration lib/pkp/tests/phpunit.xml --no-coverage " . dirname(__DIR__) . "/tests\n\n");
 }
 
 $files = glob(__DIR__ . '/*Test.php') ?: [];

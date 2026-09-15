@@ -3,7 +3,7 @@
 /**
  * @file plugins/generic/blindReviewGuard/classes/ScanReport.php
  *
- * Copyright (c) 2026 OJSBR (https://ojsbr.com.br)
+ * Copyright (c) 2026 OJSBR (https://ojsbr.com)
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  * @class ScanReport
@@ -24,8 +24,16 @@ class ScanReport
         /** False when the body text could not be read (e.g. a scanned PDF). */
         public readonly bool $textReliable = true,
         /** The submission file this report refers to, when it came from OJS. */
-        public readonly ?int $submissionFileId = null
+        public readonly ?int $submissionFileId = null,
+        /** Where the cleaned copy was written, when something was cleaned. */
+        public readonly ?string $cleanedPath = null
     ) {
+    }
+
+    /** The same report, as if nothing had been cleaned. */
+    public function withoutCleaning(): self
+    {
+        return new self($this->filename, $this->findings, [], $this->textReliable, $this->submissionFileId);
     }
 
     public function hasFindings(): bool
