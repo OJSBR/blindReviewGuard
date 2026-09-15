@@ -15,8 +15,11 @@
 namespace APP\plugins\generic\blindReviewGuard\tests;
 
 use APP\plugins\generic\blindReviewGuard\classes\Needles;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PKP\tests\PKPTestCase;
 
-class NeedlesTest extends TestCase
+#[CoversClass(Needles::class)]
+class NeedlesTest extends PKPTestCase
 {
     public function testMatchesAWholeName(): void
     {

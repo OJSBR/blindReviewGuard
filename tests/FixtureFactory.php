@@ -137,12 +137,12 @@ class FixtureFactory
         $stream = gzcompress($content);
 
         $objects = [
-            1 => "<< /Type /Catalog /Pages 2 0 R >>",
-            2 => "<< /Type /Pages /Kids [3 0 R] /Count 1 >>",
-            3 => "<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>",
-            4 => "<< /Length " . strlen($stream) . " /Filter /FlateDecode >>\nstream\n" . $stream . "\nendstream",
-            5 => "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>",
-            6 => "<< /Author (Maria Souza) /Creator (Microsoft Word) /Title (Estudo sobre letramento) >>",
+            1 => '<< /Type /Catalog /Pages 2 0 R >>',
+            2 => '<< /Type /Pages /Kids [3 0 R] /Count 1 >>',
+            3 => '<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>',
+            4 => '<< /Length ' . strlen($stream) . " /Filter /FlateDecode >>\nstream\n" . $stream . "\nendstream",
+            5 => '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>',
+            6 => '<< /Author (Maria Souza) /Creator (Microsoft Word) /Title (Estudo sobre letramento) >>',
         ];
 
         $pdf = "%PDF-1.4\n";

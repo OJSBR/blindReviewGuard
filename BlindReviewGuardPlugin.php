@@ -96,30 +96,31 @@ class BlindReviewGuardPlugin extends GenericPlugin
     ];
 
     /**
-     * @copydoc Plugin::register()
+     * Register the plugin and its hooks.
      *
-     * @param null|mixed $mainContextId
+     * @param string $category
+     * @param string $path
+     * @param null|int $mainContextId
      */
-    public function register($category, $path, $mainContextId = null)
+    public function register($category, $path, $mainContextId = null): bool
     {
-        if (!parent::register($category, $path, $mainContextId)) {
-            return false;
+        $success = parent::register($category, $path, $mainContextId);
+        if (!$success || Application::isUnderMaintenance()) {
+            return $success;
         }
 
-        if (Application::isUnderMaintenance()) {
-            return true;
-        }
+        // The hooks are always registered and each one checks whether the plugin
+        // is enabled in the journal of the submission (pkp/pkp-lib#11793): files
+        // and review assignments can be created without a journal in the request,
+        // from the command line or a queued job.
+        Hook::add('SubmissionFile::add', $this->checkPromotedFile(...));
+        Hook::add('ReviewAssignment::add', $this->checkBeforeReviewerSeesIt(...));
 
-        if ($this->getEnabled($mainContextId)) {
-            Hook::add('SubmissionFile::add', $this->checkPromotedFile(...));
-            Hook::add('ReviewAssignment::add', $this->checkBeforeReviewerSeesIt(...));
-        }
-
-        return true;
+        return $success;
     }
 
     /**
-     * @copydoc Plugin::getDisplayName()
+     * Name shown in the plugins list.
      */
     public function getDisplayName(): string
     {
@@ -127,7 +128,7 @@ class BlindReviewGuardPlugin extends GenericPlugin
     }
 
     /**
-     * @copydoc Plugin::getDescription()
+     * Description shown in the plugins list.
      */
     public function getDescription(): string
     {
@@ -139,55 +140,54 @@ class BlindReviewGuardPlugin extends GenericPlugin
     //
 
     /**
-     * @copydoc Plugin::getActions()
+     * Add the settings action to the plugin entry in the plugins list.
      */
-    public function getActions($request, $actionArgs)
+    public function getActions($request, $verb): array
     {
-        $actions = parent::getActions($request, $actionArgs);
-        if (!$this->getEnabled()) {
+        $actions = parent::getActions($request, $verb);
+        if (!$request->getContext() || !$this->getEnabled()) {
             return $actions;
         }
 
-        $router = $request->getRouter();
-        array_unshift($actions, new LinkAction(
-            'settings',
-            new AjaxModal(
-                $router->url($request, null, null, 'manage', null, ['verb' => 'settings', 'plugin' => $this->getName(), 'category' => 'generic']),
-                $this->getDisplayName()
-            ),
-            __('manager.plugins.settings'),
-            null
-        ));
+        $url = $request->getRouter()->url($request, null, null, 'manage', null, [
+            'verb' => 'settings',
+            'plugin' => $this->getName(),
+            'category' => 'generic',
+        ]);
+        array_unshift($actions, new LinkAction('settings', new AjaxModal($url, $this->getDisplayName()), __('manager.plugins.settings')));
 
         return $actions;
     }
 
     /**
-     * @copydoc Plugin::manage()
+     * Show and save the settings form.
      */
-    public function manage($args, $request)
+    public function manage($args, $request): JSONMessage
     {
-        if ($request->getUserVar('verb') === 'settings') {
-            $form = new BlindReviewGuardSettingsForm($this);
-            if (!$request->getUserVar('save')) {
-                $form->initData();
-                return new JSONMessage(true, $form->fetch($request));
-            }
-            $form->readInputData();
-            if ($form->validate()) {
-                $form->execute();
-                $notificationManager = new NotificationManager();
-                $notificationManager->createTrivialNotification(
-                    $request->getUser()->getId(),
-                    Notification::NOTIFICATION_TYPE_SUCCESS,
-                    ['contents' => __('plugins.generic.blindReviewGuard.settings.saved')]
-                );
-                return new JSONMessage(true);
-            }
+        // The settings belong to a journal; there is nothing to configure site-wide.
+        if ($request->getUserVar('verb') !== 'settings' || !$request->getContext()) {
+            return parent::manage($args, $request);
+        }
+
+        $form = new BlindReviewGuardSettingsForm($this, $request->getContext());
+        if (!$request->getUserVar('save')) {
+            $form->initData();
             return new JSONMessage(true, $form->fetch($request));
         }
 
-        return parent::manage($args, $request);
+        $form->readInputData();
+        if (!$form->validate()) {
+            return new JSONMessage(true, $form->fetch($request));
+        }
+
+        $form->execute();
+        (new NotificationManager())->createTrivialNotification(
+            $request->getUser()->getId(),
+            Notification::NOTIFICATION_TYPE_SUCCESS,
+            ['contents' => __('plugins.generic.blindReviewGuard.settings.saved')]
+        );
+
+        return new JSONMessage(true);
     }
 
     /**
@@ -226,7 +226,7 @@ class BlindReviewGuardPlugin extends GenericPlugin
         }
 
         $context = $this->resolveContext($submission);
-        if (!$context || !$this->shouldScan($context)) {
+        if (!$context || !$this->getEnabled($context->getId()) || !$this->shouldScan($context)) {
             return Hook::CONTINUE;
         }
 
@@ -264,7 +264,7 @@ class BlindReviewGuardPlugin extends GenericPlugin
             return Hook::CONTINUE;
         }
         $context = $this->resolveContext($submission);
-        if (!$context) {
+        if (!$context || !$this->getEnabled($context->getId())) {
             return Hook::CONTINUE;
         }
 
@@ -308,6 +308,8 @@ class BlindReviewGuardPlugin extends GenericPlugin
     }
 
     /**
+     * Scan one submission file against the identities of the submission's contributors.
+     *
      * @param bool $allowClean Pass false to inspect without modifying anything
      */
     private function scan(SubmissionFile $submissionFile, $submission, Context $context, bool $allowClean = true): ?ScanReport
@@ -434,6 +436,9 @@ class BlindReviewGuardPlugin extends GenericPlugin
         return is_readable($path) ? $path : null;
     }
 
+    /**
+     * The journal of the submission, from the request when it is the same one.
+     */
     private function resolveContext($submission): ?Context
     {
         $request = Application::get()->getRequest();
@@ -507,6 +512,9 @@ class BlindReviewGuardPlugin extends GenericPlugin
         Repo::eventLog()->add($eventLog);
     }
 
+    /**
+     * Show the findings to the user doing the work, when the journal wants it.
+     */
     private function notify(ScanReport $report, $submission, string $key): void
     {
         $request = Application::get()->getRequest();

@@ -13,11 +13,14 @@
 
 namespace APP\plugins\generic\blindReviewGuard\tests;
 
-use APP\plugins\generic\blindReviewGuard\classes\Finding;
 use APP\plugins\generic\blindReviewGuard\classes\FileScanner;
+use APP\plugins\generic\blindReviewGuard\classes\Finding;
 use APP\plugins\generic\blindReviewGuard\classes\IdentityProfile;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PKP\tests\PKPTestCase;
 
-class FileScannerTest extends TestCase
+#[CoversClass(FileScanner::class)]
+class FileScannerTest extends PKPTestCase
 {
     private function profile(): IdentityProfile
     {
@@ -118,5 +121,11 @@ class FileScannerTest extends TestCase
         $this->assertSame('serialise.docx', $array['filename']);
         $this->assertTrue(is_array($array['findings']));
         $this->assertTrue(isset($array['findings'][0]['type'], $array['findings'][0]['match']));
+    }
+
+    public static function tearDownAfterClass(): void
+    {
+        FixtureFactory::cleanUp();
+        parent::tearDownAfterClass();
     }
 }

@@ -69,6 +69,25 @@ class OoxmlScanner implements Scanner
         'xl/sharedStrings.xml',
     ];
 
+    /**
+     * Parts larger than this once uncompressed are not read: a few kilobytes in
+     * the zip can expand to gigabytes, and the scan runs inside an editor's request.
+     */
+    public const MAX_PART_BYTES = 16777216;
+
+    /**
+     * The uncompressed content of a part, or false when it is missing or too large.
+     */
+    public static function readPart(ZipArchive $zip, string $name): string|false
+    {
+        $stat = $zip->statName($name);
+        if ($stat === false || $stat['size'] > self::MAX_PART_BYTES) {
+            return false;
+        }
+
+        return $zip->getFromName($name);
+    }
+
     public function handles(string $extension): bool
     {
         return in_array(strtolower($extension), self::EXTENSIONS, true);
@@ -109,7 +128,7 @@ class OoxmlScanner implements Scanner
     {
         $findings = [];
         foreach (['docProps/core.xml', 'docProps/app.xml'] as $part) {
-            $xml = $zip->getFromName($part);
+            $xml = self::readPart($zip, $part);
             if ($xml === false) {
                 continue;
             }
@@ -144,7 +163,7 @@ class OoxmlScanner implements Scanner
             if (!preg_match('#^word/(document|comments|commentsExtended|people|footnotes|endnotes|header\d*|footer\d*)\.xml$#i', $name)) {
                 continue;
             }
-            $xml = $zip->getFromIndex($i);
+            $xml = self::readPart($zip, $name);
             if ($xml === false) {
                 continue;
             }
@@ -186,7 +205,7 @@ class OoxmlScanner implements Scanner
             if (!in_array($name, self::TEXT_PARTS, true) && !$isSlide) {
                 continue;
             }
-            $xml = $zip->getFromIndex($i);
+            $xml = self::readPart($zip, $name);
             if ($xml === false) {
                 continue;
             }

@@ -1,10 +1,10 @@
 # Blind Review Guard — OJS plugin
 
 [![OJS](https://img.shields.io/badge/OJS-3.5-brightgreen)](https://pkp.sfu.ca/ojs/)
-[![Version](https://img.shields.io/badge/version-1.0.1.0-blue)](version.xml)
+[![Version](https://img.shields.io/badge/version-1.0.2.0-blue)](version.xml)
 [![License](https://img.shields.io/badge/license-GPL--3.0-lightgrey)](LICENSE)
 
-**⬇️ Install package:** [OJS 3.5](https://github.com/OJSBR/blindReviewGuard/releases/download/1.0.1.0/blindReviewGuard-1.0.1.0.tar.gz) — or browse all [Releases](../../releases).
+**⬇️ Install package:** [OJS 3.5](https://github.com/OJSBR/blindReviewGuard/releases/download/1.0.2.0/blindReviewGuard-1.0.2.0.tar.gz) — or browse all [Releases](../../releases).
 
 A generic plugin for **Open Journal Systems (OJS)** that checks the files a reviewer is about
 to receive for anything that identifies the authors, and can remove the identifying metadata
@@ -17,7 +17,7 @@ automatically. **The file the author uploaded is never touched.**
 
 | OJS version | Branch | Plugin release |
 |-------------|--------|----------------|
-| OJS 3.5.x   | [`stable-3_5_0`](../../tree/stable-3_5_0) *(default)* | 1.0.1.0 |
+| OJS 3.5.x   | [`stable-3_5_0`](../../tree/stable-3_5_0) *(default)* | 1.0.2.0 |
 
 Requires PHP 8.2+ with the standard `zip` and `mbstring` extensions. No external binary is
 needed: there is no dependency on `exiftool`, `qpdf` or `pdftotext`.
@@ -119,6 +119,11 @@ That is why this plugin works on the copy, at the moment the copy is created. Tw
 Whether the review is anonymous is read from the journal's `defaultReviewMode` at the first
 moment (no reviewer exists yet) and from the assignment's own `reviewMethod` at the second.
 
+Both hooks are registered whether or not a journal is in the request, and each one checks
+whether the plugin is enabled in the journal of the submission (pkp/pkp-lib#11793): files and
+review assignments created from the command line or a queued job are covered too. At site level
+there is nothing to configure.
+
 Formats, all in pure PHP:
 
 - **OOXML** (`.docx`, `.xlsx`, `.pptx`) via `ZipArchive`: properties, `w:author` attributes,
@@ -128,6 +133,11 @@ Formats, all in pure PHP:
   body is read on a best-effort basis by inflating the FlateDecode content streams; when that
   fails — a scanned PDF, an exotic encoding — the report says the text could not be read
   rather than reporting the file as clean.
+
+The scan runs inside an editor's request, so it is bounded: a PDF larger than 64 MB is not read
+into memory, a content stream is never inflated past 16 MB, and a part of an OOXML package
+larger than 16 MB once uncompressed is skipped. A few kilobytes of compressed data can expand to
+gigabytes; past these limits the report says the text could not be fully read.
 
 **Cleaning never writes a stored file.** The review copy is a new submission file, but it points
 at the very same stored file as the author's upload. So the cleaned package is written to a
@@ -139,38 +149,43 @@ nothing was removed.
 
 ## Tests
 
-- **PHP suite** (`tests/`, 67 tests): boundary matching (`Sousa` must not fire on `Sousada`),
-  names split across runs, accented text, the neutral placeholders Word writes, the cleaning
-  removing the metadata and leaving the manuscript alone **and never writing the source file**,
-  the PDF scanner admitting when it could not read the body, the plugin classes against the
-  installed PKP (return types of the overridden methods, file stages in scope), the settings
-  form, the 38 translations (identical keys, placeholders, fuzzy markers) and the template.
-  Fixtures are **generated, not committed**. Run either way from the OJS root:
+- **PHPUnit** (`tests/*Test.php`, on `PKP\tests\PKPTestCase`, 75 tests): boundary matching
+  (`Sousa` must not fire on `Sousada`), names split across runs, accented text, the neutral
+  placeholders Word writes, the cleaning removing the metadata and leaving the manuscript alone
+  **and never writing the source file**, the PDF scanner admitting when it could not read the
+  body, the size limits (a stream or a zip part that expands past the limit is not read), the
+  plugin classes against the installed PKP, the file stages in scope, the hooks registered
+  without a journal in the request, the site level without settings, the 38 translations and the
+  template. Fixtures are **generated, not committed**. From the OJS root:
 
   ```bash
-  php plugins/generic/blindReviewGuard/tests/run.php
   lib/pkp/lib/vendor/bin/phpunit --configuration lib/pkp/tests/phpunit.xml --no-coverage "$PWD/plugins/generic/blindReviewGuard/tests"
   ```
 
-- **Cypress** (`cypress/tests/functional/BlindReviewGuard.cy.js`): the settings, and a file sent
-  to review through the same endpoint the "send to review" step uses — the review copy gets a
-  file of its own and the author's upload keeps its stored file. Captcha on login must be off
-  for the run.
-
-  ```bash
-  npx cypress run --config specPattern='plugins/generic/blindReviewGuard/cypress/tests/functional/*.cy.js' \
-    --env contextPath=<journal>,adminUser=<user>,adminPassword=<password>,submissionId=<id>,submissionFileId=<id>
-  ```
-
+- **Cypress** (`cypress/tests/functional/BlindReviewGuard.cy.js`, run by
+  [pkp-github-actions](https://github.com/pkp/pkp-github-actions) on every push): enables the
+  plugin and saves a check on its own. With `submissionId` and `submissionFileId` (a submission in
+  external review with a `.docx` naming one of its authors) it also sends the file to review
+  through the endpoint the "send to review" step uses and checks that the review copy gets a file
+  of its own while the author's upload keeps its stored file (it fails with the hook off). Captcha
+  on login must be off for the run.
 - Verified on OJS 3.5.0.3 with a `.docx` naming the author in its properties, tracked changes
-  and comments, sent to review: the author's upload unchanged (same checksum, same stored file),
-  the review copy cleaned, the body left intact, the two Activity Log entries, and a reviewer
-  assignment checked without errors. The same flow on 1.0.0.0 reproduces the defect above.
+  and comments, sent to review with and without a journal in the request (as on the command
+  line): the author's upload unchanged (same checksum, same stored file), the review copy
+  cleaned, the body left intact, and a reviewer assignment checked without errors.
+
+Tests are kept in the repository and are not part of the release package.
 
 ## Credits & authorship
 
 - **Developed and maintained by** [OJSBR](https://ojsbr.com) — original plugin.
 - Distributed under the **GNU GPL v3**, the same license as OJS.
+
+## AI use
+
+Generative AI (Claude, by Anthropic) was used to write and run tests, improve the code and bring
+it in line with PKP standards. Every change is reviewed and tested by OJSBR, which is responsible
+for the published releases.
 
 ## Contributing
 
@@ -196,7 +211,7 @@ automaticamente os metadados identificadores. **O arquivo enviado pelo autor nun
 
 | Versão do OJS | Branch | Release do plugin |
 |---------------|--------|-------------------|
-| OJS 3.5.x     | [`stable-3_5_0`](../../tree/stable-3_5_0) *(padrão)* | 1.0.1.0 |
+| OJS 3.5.x     | [`stable-3_5_0`](../../tree/stable-3_5_0) *(padrão)* | 1.0.2.0 |
 
 Requer PHP 8.2+ com as extensões `zip` e `mbstring`. Não depende de nenhum binário externo —
 nada de `exiftool`, `qpdf` ou `pdftotext`.
@@ -261,23 +276,32 @@ numa heurística é uma promessa maior do que este plugin deve fazer.
 
 ### Testes
 
-Suíte PHP em `tests/` (67 testes, pelo `tests/run.php` ou pelo PHPUnit do PKP) e Cypress em
-`cypress/tests/functional/`, com os comandos da seção em inglês. A suíte cobre o casamento por
-limite de palavra (`Sousa` não dispara em `Sousada`), nome partido entre runs, texto acentuado, a
-limpeza que remove o metadado, preserva o manuscrito **e nunca grava o arquivo de origem**, as
-classes do plugin contra o PKP instalado, as 38 traduções e o template. Os arquivos de teste são
-**gerados, não versionados**.
+PHPUnit em `tests/` (sobre `PKP\tests\PKPTestCase`, 75 testes) e Cypress em
+`cypress/tests/functional/` (rodado pelo [pkp-github-actions](https://github.com/pkp/pkp-github-actions)
+a cada push), com os comandos da seção em inglês. A suíte cobre o casamento por limite de palavra
+(`Sousa` não dispara em `Sousada`), nome partido entre runs, texto acentuado, a limpeza que remove o
+metadado, preserva o manuscrito **e nunca grava o arquivo de origem**, os limites de tamanho, as
+classes do plugin contra o PKP instalado, os hooks registrados sem revista na requisição, o nível
+do site sem configurações, as 38 traduções e o template. Os arquivos de teste são **gerados, não
+versionados**.
 
 Verificado no OJS 3.5.0.3 com um `.docx` que nomeia o autor nas propriedades, nas marcas de
-revisão e nos comentários, enviado para avaliação: envio do autor inalterado (mesmo checksum,
-mesmo arquivo armazenado), cópia da avaliação limpa, corpo intacto, os dois registros no Histórico
-de Atividades e designação de avaliador conferida sem erros. O mesmo fluxo na 1.0.0.0 reproduz o
-defeito descrito acima.
+revisão e nos comentários, enviado para avaliação com e sem revista na requisição (como na linha
+de comando): envio do autor inalterado (mesmo checksum, mesmo arquivo armazenado), cópia da
+avaliação limpa, corpo intacto e designação de avaliador conferida sem erros.
+
+Os testes ficam no repositório e não fazem parte do pacote da release.
 
 ### Créditos e autoria
 
 - **Desenvolvido e mantido pela** [OJSBR](https://ojsbr.com) — plugin autoral.
 - Distribuído sob a **GNU GPL v3**, a mesma licença do OJS.
+
+### Uso de IA
+
+Foi usada IA generativa (Claude, da Anthropic) para escrever e rodar testes, melhorar o código e
+alinhá-lo aos padrões da PKP. Toda mudança é revisada e testada pela OJSBR, que responde pelas
+releases publicadas.
 
 ### Licença
 

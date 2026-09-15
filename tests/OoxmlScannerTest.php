@@ -13,12 +13,16 @@
 
 namespace APP\plugins\generic\blindReviewGuard\tests;
 
-use APP\plugins\generic\blindReviewGuard\classes\Finding;
 use APP\plugins\generic\blindReviewGuard\classes\FileScanner;
+use APP\plugins\generic\blindReviewGuard\classes\Finding;
 use APP\plugins\generic\blindReviewGuard\classes\IdentityProfile;
 use APP\plugins\generic\blindReviewGuard\classes\scanners\OoxmlScanner;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PKP\tests\PKPTestCase;
+use ZipArchive;
 
-class OoxmlScannerTest extends TestCase
+#[CoversClass(OoxmlScanner::class)]
+class OoxmlScannerTest extends PKPTestCase
 {
     private function profile(): IdentityProfile
     {
@@ -98,6 +102,37 @@ class OoxmlScannerTest extends TestCase
         $this->assertEmpty($this->matchesOfType($findings, Finding::TYPE_DOCUMENT_PROPERTY));
         $this->assertEmpty($this->matchesOfType($findings, Finding::TYPE_TEXT));
         $this->assertNotEmpty($this->matchesOfType($findings, Finding::TYPE_REVISION_MARK));
+    }
+
+    public function testAPartThatExpandsBeyondTheLimitIsNotRead(): void
+    {
+        // A zip entry of a few kilobytes can expand to gigabytes; past the limit
+        // the part is not read at all, and the cleaner skips it the same way.
+        $this->assertContains('maria.souza@ufxx.br', $this->matchesOfType($this->scanDocumentWithPadding(64), Finding::TYPE_TEXT), 'the control part was not read');
+        $this->assertNotContains('maria.souza@ufxx.br', $this->matchesOfType($this->scanDocumentWithPadding(OoxmlScanner::MAX_PART_BYTES), Finding::TYPE_TEXT));
+    }
+
+    /**
+     * Scan a .docx whose body shows the author's e-mail followed by $padding bytes.
+     *
+     * @return Finding[]
+     */
+    private function scanDocumentWithPadding(int $padding): array
+    {
+        $path = FixtureFactory::directory() . '/padded-' . $padding . '.docx';
+        @unlink($path);
+        $zip = new ZipArchive();
+        $zip->open($path, ZipArchive::CREATE);
+        $zip->addFromString('word/document.xml', '<w:document><w:body><w:p><w:r><w:t>maria.souza@ufxx.br</w:t></w:r></w:p></w:body></w:document>' . str_repeat(' ', $padding));
+        $zip->close();
+
+        return (new OoxmlScanner())->scan($path, $this->profile(), FileScanner::DEFAULT_CHECKS);
+    }
+
+    public static function tearDownAfterClass(): void
+    {
+        FixtureFactory::cleanUp();
+        parent::tearDownAfterClass();
     }
 
     public function testNeutralPlaceholdersAreNotReported(): void

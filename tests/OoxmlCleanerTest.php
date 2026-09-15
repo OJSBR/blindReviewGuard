@@ -13,14 +13,17 @@
 
 namespace APP\plugins\generic\blindReviewGuard\tests;
 
-use APP\plugins\generic\blindReviewGuard\classes\Finding;
 use APP\plugins\generic\blindReviewGuard\classes\FileScanner;
+use APP\plugins\generic\blindReviewGuard\classes\Finding;
 use APP\plugins\generic\blindReviewGuard\classes\IdentityProfile;
 use APP\plugins\generic\blindReviewGuard\classes\OoxmlCleaner;
 use APP\plugins\generic\blindReviewGuard\classes\scanners\OoxmlScanner;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PKP\tests\PKPTestCase;
 use ZipArchive;
 
-class OoxmlCleanerTest extends TestCase
+#[CoversClass(OoxmlCleaner::class)]
+class OoxmlCleanerTest extends PKPTestCase
 {
     private function profile(): IdentityProfile
     {
@@ -119,5 +122,11 @@ class OoxmlCleanerTest extends TestCase
         $this->assertEmpty($removed);
         $this->assertFalse(is_file($target), 'a target was left behind although there was nothing to remove');
         $this->assertSame($before, md5_file($source));
+    }
+
+    public static function tearDownAfterClass(): void
+    {
+        FixtureFactory::cleanUp();
+        parent::tearDownAfterClass();
     }
 }

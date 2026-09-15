@@ -13,12 +13,15 @@
 
 namespace APP\plugins\generic\blindReviewGuard\tests;
 
-use APP\plugins\generic\blindReviewGuard\classes\Finding;
 use APP\plugins\generic\blindReviewGuard\classes\FileScanner;
+use APP\plugins\generic\blindReviewGuard\classes\Finding;
 use APP\plugins\generic\blindReviewGuard\classes\IdentityProfile;
 use APP\plugins\generic\blindReviewGuard\classes\scanners\PdfScanner;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PKP\tests\PKPTestCase;
 
-class PdfScannerTest extends TestCase
+#[CoversClass(PdfScanner::class)]
+class PdfScannerTest extends PKPTestCase
 {
     private function profile(): IdentityProfile
     {
@@ -55,6 +58,35 @@ class PdfScannerTest extends TestCase
         $this->assertFalse($scanner->textExtractionReliable(), 'the scanner claimed it had read a body it could not read');
     }
 
+    public function testAStreamThatInflatesBeyondTheLimitIsNotRead(): void
+    {
+        // A few kilobytes of compressed stream can expand to gigabytes inside an
+        // editor's request. Past the limit the stream is skipped and the report
+        // says the body was not fully read.
+        $scanner = new PdfScanner();
+        $small = $scanner->scan($this->pdfWithStream(64), $this->profile(), FileScanner::DEFAULT_CHECKS);
+        $this->assertContains('maria.souza@ufxx.br', $this->textMatches($small), 'the control stream was not read');
+        $this->assertTrue($scanner->textExtractionReliable());
+
+        $large = $scanner->scan($this->pdfWithStream(PdfScanner::MAX_INFLATED_BYTES), $this->profile(), FileScanner::DEFAULT_CHECKS);
+        $this->assertNotContains('maria.souza@ufxx.br', $this->textMatches($large));
+        $this->assertFalse($scanner->textExtractionReliable(), 'a skipped stream must not be reported as read');
+    }
+
+    public function testAFileBeyondTheLimitIsNotLoaded(): void
+    {
+        $path = FixtureFactory::directory() . '/huge.pdf';
+        $handle = fopen($path, 'w');
+        fwrite($handle, "%PDF-1.4\n1 0 obj\n<< /Author (Maria Souza) >>\nendobj\n");
+        ftruncate($handle, PdfScanner::MAX_FILE_BYTES + 1);
+        fclose($handle);
+
+        $scanner = new PdfScanner();
+        $this->assertSame([], $scanner->scan($path, $this->profile(), FileScanner::DEFAULT_CHECKS));
+        $this->assertFalse($scanner->textExtractionReliable());
+        unlink($path);
+    }
+
     public function testDecodesUtf16HexStrings(): void
     {
         // Non-ASCII author names are written as UTF-16BE hex strings by most
@@ -66,6 +98,31 @@ class PdfScannerTest extends TestCase
     public function testDecodesEscapedLiterals(): void
     {
         $this->assertSame('Souza (org.)', PdfScanner::decodeLiteral('Souza \\(org.\\)'));
+    }
+
+    /**
+     * A PDF whose only content stream shows the author's e-mail followed by
+     * $padding bytes of spaces.
+     */
+    private function pdfWithStream(int $padding): string
+    {
+        $path = FixtureFactory::directory() . '/stream-' . $padding . '.pdf';
+        $stream = gzcompress('BT (maria.souza@ufxx.br) Tj ET' . str_repeat(' ', $padding));
+        file_put_contents($path, "%PDF-1.4\n1 0 obj\n<< /Length " . strlen($stream) . " /Filter /FlateDecode >>\nstream\n" . $stream . "\nendstream\nendobj\n%%EOF\n");
+
+        return $path;
+    }
+
+    /** @return string[] */
+    private function textMatches(array $findings): array
+    {
+        return array_values(array_map(fn (Finding $f) => $f->match, array_filter($findings, fn (Finding $f) => $f->type === Finding::TYPE_TEXT)));
+    }
+
+    public static function tearDownAfterClass(): void
+    {
+        FixtureFactory::cleanUp();
+        parent::tearDownAfterClass();
     }
 
     public function testHandlesPdfOnly(): void

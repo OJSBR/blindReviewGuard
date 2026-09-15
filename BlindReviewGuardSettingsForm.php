@@ -13,26 +13,28 @@
 
 namespace APP\plugins\generic\blindReviewGuard;
 
-use APP\core\Application;
 use APP\template\TemplateManager;
+use PKP\context\Context;
 use PKP\form\Form;
+use PKP\form\validation\FormValidatorCSRF;
+use PKP\form\validation\FormValidatorPost;
 
 class BlindReviewGuardSettingsForm extends Form
 {
-    public function __construct(private BlindReviewGuardPlugin $plugin)
+    public function __construct(private BlindReviewGuardPlugin $plugin, private Context $context)
     {
         parent::__construct($plugin->getTemplateResource('settingsForm.tpl'));
 
-        $this->addCheck(new \PKP\form\validation\FormValidatorPost($this));
-        $this->addCheck(new \PKP\form\validation\FormValidatorCSRF($this));
+        $this->addCheck(new FormValidatorPost($this));
+        $this->addCheck(new FormValidatorCSRF($this));
     }
 
     /**
-     * @copydoc Form::initData()
+     * Load the current settings of the journal.
      */
     public function initData(): void
     {
-        $contextId = $this->contextId();
+        $contextId = $this->context->getId();
         foreach (array_keys(BlindReviewGuardPlugin::DEFAULT_SETTINGS) as $name) {
             $this->setData($name, $this->plugin->getSettingOrDefault($contextId, $name));
         }
@@ -41,7 +43,7 @@ class BlindReviewGuardSettingsForm extends Form
     }
 
     /**
-     * @copydoc Form::readInputData()
+     * Read the submitted settings.
      */
     public function readInputData(): void
     {
@@ -51,7 +53,7 @@ class BlindReviewGuardSettingsForm extends Form
     }
 
     /**
-     * @copydoc Form::fetch()
+     * Render the form.
      *
      * @param null|mixed $template
      */
@@ -64,22 +66,15 @@ class BlindReviewGuardSettingsForm extends Form
     }
 
     /**
-     * @copydoc Form::execute()
+     * Save the settings of the journal.
      */
     public function execute(...$functionArgs)
     {
-        $contextId = $this->contextId();
+        $contextId = $this->context->getId();
         foreach (array_keys(BlindReviewGuardPlugin::DEFAULT_SETTINGS) as $name) {
             $this->plugin->updateSetting($contextId, $name, (bool) $this->getData($name), 'bool');
         }
 
         return parent::execute(...$functionArgs);
-    }
-
-    private function contextId(): int
-    {
-        $context = Application::get()->getRequest()->getContext();
-
-        return $context ? $context->getId() : Application::SITE_CONTEXT_ID;
     }
 }

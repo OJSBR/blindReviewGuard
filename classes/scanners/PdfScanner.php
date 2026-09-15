@@ -46,6 +46,12 @@ class PdfScanner implements Scanner
     /** Streams beyond this are not inflated; the report flags the file as partially read. */
     public const MAX_STREAMS = 400;
 
+    /** Never inflate a stream to more than this: a small stream can expand without bound. */
+    public const MAX_INFLATED_BYTES = 16777216;
+
+    /** Files larger than this are not read into memory at all; the report flags them as not read. */
+    public const MAX_FILE_BYTES = 67108864;
+
     private bool $textReliable = true;
 
     public function handles(string $extension): bool
@@ -68,6 +74,12 @@ class PdfScanner implements Scanner
     public function scan(string $path, IdentityProfile $profile, array $checks): array
     {
         $this->textReliable = true;
+
+        $size = @filesize($path);
+        if ($size === false || $size > self::MAX_FILE_BYTES) {
+            $this->textReliable = false;
+            return [];
+        }
 
         $raw = @file_get_contents($path);
         if ($raw === false || $raw === '') {
@@ -177,11 +189,12 @@ class PdfScanner implements Scanner
                 $this->textReliable = false;
                 continue;
             }
-            $inflated = @gzuncompress($stream);
-            if ($inflated === false) {
-                $inflated = @gzinflate($stream);
+            $inflated = self::inflate($stream, ZLIB_ENCODING_DEFLATE) ?? self::inflate($stream, ZLIB_ENCODING_RAW);
+            if ($inflated === null) {
+                continue;
             }
-            if ($inflated === false) {
+            if (strlen($inflated) > self::MAX_INFLATED_BYTES) {
+                $this->textReliable = false;
                 continue;
             }
             $inflatedAny = true;
@@ -193,6 +206,38 @@ class PdfScanner implements Scanner
         }
 
         return trim(preg_replace('/\s+/u', ' ', $text) ?? $text);
+    }
+
+    /**
+     * Inflate a stream a small piece at a time, stopping as soon as the output
+     * passes MAX_INFLATED_BYTES: gzuncompress() does not honour its length limit.
+     *
+     * @return null|string Null when the stream is not in this encoding; a string
+     *                     longer than MAX_INFLATED_BYTES when it expands past the limit
+     */
+    public static function inflate(string $data, int $encoding): ?string
+    {
+        $context = @inflate_init($encoding);
+        if ($context === false) {
+            return null;
+        }
+
+        $out = '';
+        foreach (str_split($data, 1024) as $chunk) {
+            $piece = @inflate_add($context, $chunk, ZLIB_SYNC_FLUSH);
+            if ($piece === false) {
+                return $out === '' ? null : $out;
+            }
+            $out .= $piece;
+            if (strlen($out) > self::MAX_INFLATED_BYTES) {
+                return $out;
+            }
+            if (inflate_get_status($context) === ZLIB_STREAM_END) {
+                break;
+            }
+        }
+
+        return $out === '' ? null : $out;
     }
 
     /**

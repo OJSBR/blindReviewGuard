@@ -75,7 +75,7 @@ class OoxmlCleaner
     {
         $removed = [];
         foreach (['docProps/core.xml', 'docProps/app.xml'] as $part) {
-            $xml = $zip->getFromName($part);
+            $xml = OoxmlScanner::readPart($zip, $part);
             if ($xml === false) {
                 continue;
             }
@@ -119,7 +119,7 @@ class OoxmlCleaner
         }
 
         foreach ($parts as $part) {
-            $xml = $zip->getFromName($part);
+            $xml = OoxmlScanner::readPart($zip, $part);
             if ($xml === false) {
                 continue;
             }
