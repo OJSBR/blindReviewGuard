@@ -384,20 +384,26 @@ describe('Blind Review Guard plugin', function() {
 				return api(pageUrl('api/v1/submissions/' + made.submissionId + '/publications/' + made.publicationId))
 					.then((publication) => authorGroupId(publication, made.submissionId))
 					.then((groupId) => {
-						return send(
-							pageUrl('api/v1/submissions/' + made.submissionId + '/publications/' + made.publicationId + '/contributors'),
-							'POST',
-							{
-								givenName: {[made.locale]: AUTHOR_GIVEN},
-								familyName: {[made.locale]: AUTHOR_FAMILY},
-								email: 'blindauthor' + Date.now().toString().slice(-8) + '@mailinator.com',
-								country: 'BR',
-								affiliations: [{name: {[made.locale]: 'OJSBR'}}],
-								biography: {[made.locale]: '<p>Contributor of the test.</p>'},
-								orcid: 'https://orcid.org/0000-0002-1825-0097',
-								userGroupId: groupId,
-							}
-						);
+						const contributor = {
+							givenName: {[made.locale]: AUTHOR_GIVEN},
+							familyName: {[made.locale]: AUTHOR_FAMILY},
+							email: 'blindauthor' + Date.now().toString().slice(-8) + '@mailinator.com',
+							country: 'BR',
+							affiliations: [{name: {[made.locale]: 'OJSBR'}}],
+							biography: {[made.locale]: '<p>Contributor of the test.</p>'},
+							userGroupId: groupId,
+						};
+						const url = pageUrl('api/v1/submissions/' + made.submissionId + '/publications/' + made.publicationId + '/contributors');
+
+						// An iD is sent only where the journal refuses the contributor
+						// for want of one: the core of 3.5 turns it down by itself,
+						// and a plugin of the journal may ask for it.
+						return send(url, 'POST', contributor).then((answer) => (
+							answer.status === 400 && answer.body && answer.body.orcid
+								&& !/not permitted/i.test(JSON.stringify(answer.body.orcid))
+								? send(url, 'POST', Object.assign({}, contributor, {orcid: 'https://orcid.org/0000-0002-1825-0097'}))
+								: cy.wrap(answer, {log: false})
+						));
 					})
 					.then((contributor) => {
 						expect(contributor.status, 'the contributor of the test was added: ' + JSON.stringify(contributor.body))
