@@ -1,10 +1,10 @@
 # Blind Review Guard — OJS plugin
 
 [![OJS](https://img.shields.io/badge/OJS-3.5-brightgreen)](https://pkp.sfu.ca/ojs/)
-[![Version](https://img.shields.io/badge/version-1.0.2.0-blue)](version.xml)
+[![Version](https://img.shields.io/badge/version-5.0.0.0-blue)](version.xml)
 [![License](https://img.shields.io/badge/license-GPL--3.0-lightgrey)](LICENSE)
 
-**⬇️ Install package:** [OJS 3.5](https://github.com/OJSBR/blindReviewGuard/releases/download/1.0.2.0/blindReviewGuard-1.0.2.0.tar.gz) — or browse all [Releases](../../releases).
+**⬇️ Install package:** [OJS 3.5](https://github.com/OJSBR/blindReviewGuard/releases/download/5.0.0.0/blindReviewGuard-5.0.0.0.tar.gz) — or browse all [Releases](../../releases).
 
 A generic plugin for **Open Journal Systems (OJS)** that checks the files a reviewer is about
 to receive for anything that identifies the authors, and can remove the identifying metadata
@@ -17,7 +17,7 @@ automatically. **The file the author uploaded is never touched.**
 
 | OJS version | Branch | Plugin release |
 |-------------|--------|----------------|
-| OJS 3.5.x   | [`stable-3_5_0`](../../tree/stable-3_5_0) *(default)* | 1.0.2.0 |
+| OJS 3.5.x   | [`stable-3_5_0`](../../tree/stable-3_5_0) *(default)* | 5.0.0.0 |
 
 Requires PHP 8.2+ with the standard `zip` and `mbstring` extensions. No external binary is
 needed: there is no dependency on `exiftool`, `qpdf` or `pdftotext`.
@@ -211,7 +211,7 @@ automaticamente os metadados identificadores. **O arquivo enviado pelo autor nun
 
 | Versão do OJS | Branch | Release do plugin |
 |---------------|--------|-------------------|
-| OJS 3.5.x     | [`stable-3_5_0`](../../tree/stable-3_5_0) *(padrão)* | 1.0.2.0 |
+| OJS 3.5.x     | [`stable-3_5_0`](../../tree/stable-3_5_0) *(padrão)* | 5.0.0.0 |
 
 Requer PHP 8.2+ com as extensões `zip` e `mbstring`. Não depende de nenhum binário externo —
 nada de `exiftool`, `qpdf` ou `pdftotext`.
